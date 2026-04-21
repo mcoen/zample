@@ -8,8 +8,8 @@ const { JsonDocumentStore } = require("@zample/document-store");
 dotenv.config({ path: "../../.env" });
 dotenv.config();
 
-const PORT = Number(process.env.PROJECTS_PORT || 4101);
-const DATA_FILE = process.env.PROJECTS_DATA_FILE || path.join(__dirname, "..", "data", "projects.json");
+const PORT = Number(process.env.LAUNCHES_PORT || 4101);
+const DATA_FILE = process.env.LAUNCHES_DATA_FILE || path.join(__dirname, "..", "data", "launches.json");
 const ALLOWED_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:3000";
 
 const validStages = ["Intake", "In Validation", "Pilot", "Production"];
@@ -58,7 +58,7 @@ function normalizeStakeholders(stakeholders, owner) {
     normalized.unshift({
       id: randomUUID(),
       name: ownerName,
-      role: "Project Owner",
+      role: "Launch Owner",
       email: ""
     });
   }
@@ -79,30 +79,30 @@ function normalizeWorkspace({ workspaceId, workspaceName, workspaceType }) {
 }
 
 app.get("/health", (_req, res) => {
-  res.json({ status: "ok", service: "projects-service" });
+  res.json({ status: "ok", service: "launches-service" });
 });
 
-app.get("/projects", (_req, res) => {
-  const projects = store
+app.get("/launches", (_req, res) => {
+  const launches = store
     .list()
     .slice()
     .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
-  res.json(projects);
+  res.json(launches);
 });
 
-app.get("/projects/:id", (req, res) => {
-  const project = store.getById(req.params.id);
+app.get("/launches/:id", (req, res) => {
+  const launch = store.getById(req.params.id);
 
-  if (!project) {
-    res.status(404).json({ error: "Project not found" });
+  if (!launch) {
+    res.status(404).json({ error: "Launch not found" });
     return;
   }
 
-  res.json(project);
+  res.json(launch);
 });
 
-app.post("/projects", (req, res) => {
+app.post("/launches", (req, res) => {
   const {
     title,
     owner,
@@ -131,7 +131,7 @@ app.post("/projects", (req, res) => {
   const normalizedRiskLevel = validRiskLevels.includes(riskLevel) ? riskLevel : "Medium";
   const normalizedWorkspace = normalizeWorkspace({ workspaceId, workspaceName, workspaceType });
 
-  const project = store.create({
+  const launch = store.create({
     title: title.trim(),
     owner: normalizedOwner,
     stage: normalizedStage,
@@ -147,10 +147,10 @@ app.post("/projects", (req, res) => {
     stakeholders: normalizeStakeholders(stakeholders, normalizedOwner)
   });
 
-  res.status(201).json(project);
+  res.status(201).json(launch);
 });
 
-app.patch("/projects/:id", (req, res) => {
+app.patch("/launches/:id", (req, res) => {
   const patch = { ...req.body };
 
   if (patch.stage && !validStages.includes(patch.stage)) {
@@ -192,18 +192,18 @@ app.patch("/projects/:id", (req, res) => {
   const updated = store.update(req.params.id, patch);
 
   if (!updated) {
-    res.status(404).json({ error: "Project not found" });
+    res.status(404).json({ error: "Launch not found" });
     return;
   }
 
   res.json(updated);
 });
 
-app.delete("/projects/:id", (req, res) => {
+app.delete("/launches/:id", (req, res) => {
   const removed = store.remove(req.params.id);
 
   if (!removed) {
-    res.status(404).json({ error: "Project not found" });
+    res.status(404).json({ error: "Launch not found" });
     return;
   }
 
@@ -212,5 +212,5 @@ app.delete("/projects/:id", (req, res) => {
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Projects service listening on http://localhost:${PORT}`);
+  console.log(`Launches service listening on http://localhost:${PORT}`);
 });

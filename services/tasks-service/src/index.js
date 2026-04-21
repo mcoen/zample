@@ -25,10 +25,10 @@ app.get("/health", (_req, res) => {
 });
 
 app.get("/tasks", (req, res) => {
-  const projectId = req.query.projectId;
+  const launchId = req.query.launchId;
   const tasks = store
     .list()
-    .filter((task) => (!projectId ? true : task.projectId === projectId))
+    .filter((task) => (!launchId ? true : task.launchId === launchId))
     .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
   res.json(tasks);
@@ -46,7 +46,7 @@ app.get("/tasks/:id", (req, res) => {
 });
 
 app.post("/tasks", (req, res) => {
-  const { title, description, assignee, dueDate, priority, taskType, projectId, status } = req.body || {};
+  const { title, description, assignee, dueDate, priority, taskType, launchId, status } = req.body || {};
 
   if (!title || typeof title !== "string") {
     res.status(400).json({ error: "title is required" });
@@ -63,7 +63,7 @@ app.post("/tasks", (req, res) => {
     dueDate: dueDate || null,
     priority: normalizedPriority,
     taskType: String(taskType || "General").trim() || "General",
-    projectId: projectId || null,
+    launchId: launchId || null,
     status: normalizedStatus
   });
 

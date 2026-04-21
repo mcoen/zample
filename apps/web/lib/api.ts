@@ -1,6 +1,6 @@
-export type ProjectStage = "Intake" | "In Validation" | "Pilot" | "Production";
-export type ProjectPriority = "Low" | "Medium" | "High" | "Urgent";
-export type ProjectRisk = "Low" | "Medium" | "High";
+export type LaunchStage = "Intake" | "In Validation" | "Pilot" | "Production";
+export type LaunchPriority = "Low" | "Medium" | "High" | "Urgent";
+export type LaunchRisk = "Low" | "Medium" | "High";
 
 export type LaunchParty = {
   id: string;
@@ -9,13 +9,13 @@ export type LaunchParty = {
   email: string;
 };
 
-export type Project = {
+export type Launch = {
   id: string;
   title: string;
   owner: string;
-  stage: ProjectStage;
-  priority: ProjectPriority;
-  riskLevel: ProjectRisk;
+  stage: LaunchStage;
+  priority: LaunchPriority;
+  riskLevel: LaunchRisk;
   dueDate: string | null;
   description: string;
   status: "active" | "archived";
@@ -41,7 +41,7 @@ export type Task = {
   dueDate: string | null;
   priority: TaskPriority;
   taskType: string;
-  projectId: string | null;
+  launchId: string | null;
   status: TaskStatus;
   createdAt: string;
   updatedAt: string;
@@ -92,16 +92,16 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await response.json()) as T;
 }
 
-export function listProjects() {
-  return request<Project[]>("/projects");
+export function listLaunches() {
+  return request<Launch[]>("/launches");
 }
 
-export function createProject(input: {
+export function createLaunch(input: {
   title: string;
   owner: string;
-  stage?: ProjectStage;
-  priority?: ProjectPriority;
-  riskLevel?: ProjectRisk;
+  stage?: LaunchStage;
+  priority?: LaunchPriority;
+  riskLevel?: LaunchRisk;
   dueDate?: string | null;
   description?: string;
   workspaceId?: string;
@@ -112,27 +112,27 @@ export function createProject(input: {
   market?: string;
   stakeholders?: Array<{ name: string; role?: string; email?: string }>;
 }) {
-  return request<Project>("/projects", {
+  return request<Launch>("/launches", {
     method: "POST",
     body: JSON.stringify(input)
   });
 }
 
-export function updateProject(id: string, patch: Partial<Project>) {
-  return request<Project>(`/projects/${id}`, {
+export function updateLaunch(id: string, patch: Partial<Launch>) {
+  return request<Launch>(`/launches/${id}`, {
     method: "PATCH",
     body: JSON.stringify(patch)
   });
 }
 
-export function deleteProject(id: string) {
-  return request<void>(`/projects/${id}`, {
+export function deleteLaunch(id: string) {
+  return request<void>(`/launches/${id}`, {
     method: "DELETE"
   });
 }
 
-export function listTasks(projectId?: string) {
-  const query = projectId ? `?projectId=${encodeURIComponent(projectId)}` : "";
+export function listTasks(launchId?: string) {
+  const query = launchId ? `?launchId=${encodeURIComponent(launchId)}` : "";
   return request<Task[]>(`/tasks${query}`);
 }
 
@@ -143,7 +143,7 @@ export function createTask(input: {
   dueDate?: string | null;
   priority?: TaskPriority;
   taskType?: string;
-  projectId?: string | null;
+  launchId?: string | null;
   status?: TaskStatus;
 }) {
   return request<Task>("/tasks", {

@@ -9,18 +9,18 @@ import {
   type ComponentType
 } from "react";
 import {
-  createProject as apiCreateLaunch,
+  createLaunch as apiCreateLaunch,
   createTask as apiCreateTask,
-  deleteProject as apiDeleteLaunch,
-  listProjects,
+  deleteLaunch as apiDeleteLaunch,
+  listLaunches,
   listTasks,
-  updateProject as apiUpdateLaunch,
+  updateLaunch as apiUpdateLaunch,
   updateTask,
   type LaunchParty,
-  type Project,
-  type ProjectPriority,
-  type ProjectRisk,
-  type ProjectStage,
+  type Launch,
+  type LaunchPriority,
+  type LaunchRisk,
+  type LaunchStage,
   type Task,
   type TaskPriority,
   type TaskStatus
@@ -40,9 +40,9 @@ type LaunchFormState = {
   category: string;
   brand: string;
   market: string;
-  stage: ProjectStage;
-  priority: ProjectPriority;
-  riskLevel: ProjectRisk;
+  stage: LaunchStage;
+  priority: LaunchPriority;
+  riskLevel: LaunchRisk;
   dueDate: string;
   description: string;
   stakeholders: StakeholderDraft[];
@@ -74,7 +74,7 @@ type UserProfile = {
   role: string;
 };
 
-const LAUNCH_STAGES: ProjectStage[] = ["Intake", "In Validation", "Pilot", "Production"];
+const LAUNCH_STAGES: LaunchStage[] = ["Intake", "In Validation", "Pilot", "Production"];
 const TASK_STATUSES: TaskStatus[] = ["todo", "in_progress", "done"];
 const LAUNCH_TYPE_OPTIONS = ["Beverage", "Condiment", "Snack", "Ingredient", "Other"];
 const TASK_PRIORITY_OPTIONS: TaskPriority[] = ["Low", "Medium", "High"];
@@ -354,7 +354,7 @@ function taskPriorityPillClass(priority: TaskPriority, themeMode: ThemeMode) {
     : "border border-emerald-300 bg-emerald-100 text-emerald-800";
 }
 
-function stagePillClass(stage: ProjectStage, themeMode: ThemeMode) {
+function stagePillClass(stage: LaunchStage, themeMode: ThemeMode) {
   if (stage === "Production") {
     return themeMode === "dark"
       ? "border border-emerald-400/45 bg-emerald-600/20 text-emerald-200"
@@ -378,7 +378,7 @@ function stagePillClass(stage: ProjectStage, themeMode: ThemeMode) {
     : "border border-slate-300 bg-slate-100 text-slate-700";
 }
 
-function priorityPillClass(priority: ProjectPriority, themeMode: ThemeMode) {
+function priorityPillClass(priority: LaunchPriority, themeMode: ThemeMode) {
   if (priority === "Urgent") {
     return themeMode === "dark"
       ? "border border-rose-400/55 bg-rose-700/25 text-rose-200"
@@ -402,7 +402,7 @@ function priorityPillClass(priority: ProjectPriority, themeMode: ThemeMode) {
     : "border border-slate-300 bg-slate-100 text-slate-700";
 }
 
-function riskPillClass(riskLevel: ProjectRisk, themeMode: ThemeMode) {
+function riskPillClass(riskLevel: LaunchRisk, themeMode: ThemeMode) {
   if (riskLevel === "High") {
     return themeMode === "dark"
       ? "border border-red-400/55 bg-red-700/25 text-red-200"
@@ -420,13 +420,13 @@ function riskPillClass(riskLevel: ProjectRisk, themeMode: ThemeMode) {
     : "border border-emerald-300 bg-emerald-100 text-emerald-800";
 }
 
-function inferLaunchType(project: Project) {
-  const explicit = String(project.workspaceType || "").trim();
+function inferLaunchType(launch: Launch) {
+  const explicit = String(launch.workspaceType || "").trim();
   if (explicit) {
     return explicit;
   }
 
-  const descriptor = `${project.category || ""} ${project.title || ""}`.toLowerCase();
+  const descriptor = `${launch.category || ""} ${launch.title || ""}`.toLowerCase();
   if (/(beverage|drink|juice|coffee|tea|water|protein)/.test(descriptor)) {
     return "Beverage";
   }
@@ -443,8 +443,8 @@ function inferLaunchType(project: Project) {
   return "Other";
 }
 
-function projectVisual(project: Project, themeMode: ThemeMode) {
-  const descriptor = `${project.category || ""} ${project.workspaceType || ""} ${project.title || ""}`.toLowerCase();
+function launchVisual(launch: Launch, themeMode: ThemeMode) {
+  const descriptor = `${launch.category || ""} ${launch.workspaceType || ""} ${launch.title || ""}`.toLowerCase();
 
   if (/(granola|snack|cereal|bar|chips|cracker)/.test(descriptor)) {
     return {
@@ -485,8 +485,8 @@ function projectVisual(project: Project, themeMode: ThemeMode) {
   };
 }
 
-function launchFormFromProject(project?: Project): LaunchFormState {
-  if (!project) {
+function launchFormFromLaunch(launch?: Launch): LaunchFormState {
+  if (!launch) {
     return {
       title: "",
       owner: "",
@@ -511,20 +511,20 @@ function launchFormFromProject(project?: Project): LaunchFormState {
   }
 
   return {
-    title: project.title || "",
-    owner: project.owner || "",
-    launchType: inferLaunchType(project),
-    category: project.category || "",
-    brand: project.brand || "",
-    market: project.market || "",
-    stage: project.stage,
-    priority: project.priority,
-    riskLevel: project.riskLevel,
-    dueDate: project.dueDate ? project.dueDate.slice(0, 10) : "",
-    description: project.description || "",
+    title: launch.title || "",
+    owner: launch.owner || "",
+    launchType: inferLaunchType(launch),
+    category: launch.category || "",
+    brand: launch.brand || "",
+    market: launch.market || "",
+    stage: launch.stage,
+    priority: launch.priority,
+    riskLevel: launch.riskLevel,
+    dueDate: launch.dueDate ? launch.dueDate.slice(0, 10) : "",
+    description: launch.description || "",
     stakeholders:
-      project.stakeholders && project.stakeholders.length
-        ? project.stakeholders.map((stakeholder) => ({
+      launch.stakeholders && launch.stakeholders.length
+        ? launch.stakeholders.map((stakeholder) => ({
             id: stakeholder.id,
             name: stakeholder.name,
             role: stakeholder.role,
@@ -566,7 +566,7 @@ function taskFormFromTask(task?: Task): TaskFormState {
 }
 
 export default function HomePage() {
-  const [launches, setLaunches] = useState<Project[]>([]);
+  const [launches, setLaunches] = useState<Launch[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const [loading, setLoading] = useState(true);
@@ -581,8 +581,8 @@ export default function HomePage() {
   const [isLaunchModalOpen, setIsLaunchModalOpen] = useState(false);
   const [launchModalMode, setLaunchModalMode] = useState<"create" | "edit">("create");
   const [launchEditingId, setLaunchEditingId] = useState<string | null>(null);
-  const [launchForm, setLaunchForm] = useState<LaunchFormState>(() => launchFormFromProject());
-  const [launchDeleteTarget, setLaunchDeleteTarget] = useState<Project | null>(null);
+  const [launchForm, setLaunchForm] = useState<LaunchFormState>(() => launchFormFromLaunch());
+  const [launchDeleteTarget, setLaunchDeleteTarget] = useState<Launch | null>(null);
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [taskModalMode, setTaskModalMode] = useState<"create" | "edit">("create");
@@ -655,7 +655,7 @@ export default function HomePage() {
 
     return favoriteLaunchIds
       .map((launchId) => byId.get(launchId))
-      .filter((launch): launch is Project => Boolean(launch));
+      .filter((launch): launch is Launch => Boolean(launch));
   }, [favoriteLaunchIds, sortedLaunches]);
 
   const activeLaunch = useMemo(() => {
@@ -672,7 +672,7 @@ export default function HomePage() {
     }
 
     return tasks
-      .filter((task) => task.projectId === activeLaunch.id)
+      .filter((task) => task.launchId === activeLaunch.id)
       .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   }, [tasks, activeLaunch]);
 
@@ -806,7 +806,7 @@ export default function HomePage() {
     const stageHealth = LAUNCH_STAGES.map((stage) => {
       const launchesInStage = sortedLaunches.filter((launch) => launch.stage === stage);
       const launchIds = new Set(launchesInStage.map((launch) => launch.id));
-      const stageTasks = tasks.filter((task) => task.projectId && launchIds.has(task.projectId));
+      const stageTasks = tasks.filter((task) => task.launchId && launchIds.has(task.launchId));
       const stageDone = stageTasks.filter((task) => task.status === "done").length;
       const stageOpen = stageTasks.filter((task) => task.status !== "done").length;
       const stageOverdue = stageTasks.filter((task) => {
@@ -826,11 +826,11 @@ export default function HomePage() {
       };
     });
 
-    const launchIdsWithTasks = new Set(tasks.map((task) => task.projectId).filter((value): value is string => Boolean(value)));
+    const launchIdsWithTasks = new Set(tasks.map((task) => task.launchId).filter((value): value is string => Boolean(value)));
     const launchesWithoutTasks = sortedLaunches.filter((launch) => !launchIdsWithTasks.has(launch.id)).length;
 
     const overdueLaunchIdSet = new Set(
-      overdueTaskList.map((task) => task.projectId).filter((value): value is string => Boolean(value))
+      overdueTaskList.map((task) => task.launchId).filter((value): value is string => Boolean(value))
     );
     const atRiskLaunches = sortedLaunches.filter(
       (launch) =>
@@ -848,7 +848,7 @@ export default function HomePage() {
         overdueTasks: number;
         urgentLaunches: number;
         highRiskLaunches: number;
-        launchProjects: string[];
+        launchTitles: string[];
       }
     >();
 
@@ -861,11 +861,11 @@ export default function HomePage() {
         overdueTasks: 0,
         urgentLaunches: 0,
         highRiskLaunches: 0,
-        launchProjects: []
+        launchTitles: []
       };
       existing.launches += 1;
-      if (!existing.launchProjects.includes(launch.title)) {
-        existing.launchProjects.push(launch.title);
+      if (!existing.launchTitles.includes(launch.title)) {
+        existing.launchTitles.push(launch.title);
       }
       if (launch.priority === "Urgent") {
         existing.urgentLaunches += 1;
@@ -877,10 +877,10 @@ export default function HomePage() {
     });
 
     tasks.forEach((task) => {
-      if (!task.projectId) {
+      if (!task.launchId) {
         return;
       }
-      const launch = launchesById.get(task.projectId);
+      const launch = launchesById.get(task.launchId);
       if (!launch) {
         return;
       }
@@ -911,10 +911,10 @@ export default function HomePage() {
 
     const openTaskCountByLaunchId = new Map<string, number>();
     tasks.forEach((task) => {
-      if (!task.projectId || task.status === "done") {
+      if (!task.launchId || task.status === "done") {
         return;
       }
-      openTaskCountByLaunchId.set(task.projectId, (openTaskCountByLaunchId.get(task.projectId) || 0) + 1);
+      openTaskCountByLaunchId.set(task.launchId, (openTaskCountByLaunchId.get(task.launchId) || 0) + 1);
     });
 
     const upcomingMilestones = sortedLaunches
@@ -972,7 +972,7 @@ export default function HomePage() {
     return tasks
       .filter((task) => task.status !== "done")
       .map((task) => {
-        const launch = task.projectId ? launchesById.get(task.projectId) || null : null;
+        const launch = task.launchId ? launchesById.get(task.launchId) || null : null;
         const dueDateValue = task.dueDate ? new Date(task.dueDate).getTime() : Number.MAX_SAFE_INTEGER;
         const isOverdue = Boolean(task.dueDate && dueDateValue < Date.now());
 
@@ -997,7 +997,7 @@ export default function HomePage() {
   const reviewItems = useMemo(() => {
     return sortedLaunches
       .map((launch) => {
-        const relatedTasks = tasks.filter((task) => task.projectId === launch.id);
+        const relatedTasks = tasks.filter((task) => task.launchId === launch.id);
         const doneTasks = relatedTasks.filter((task) => task.status === "done").length;
         const openTasks = relatedTasks.filter((task) => task.status !== "done").length;
         const reasons: string[] = [];
@@ -1026,7 +1026,7 @@ export default function HomePage() {
           reasons
         };
       })
-      .filter((item): item is { launch: Project; doneTasks: number; openTasks: number; reasons: string[] } => Boolean(item))
+      .filter((item): item is { launch: Launch; doneTasks: number; openTasks: number; reasons: string[] } => Boolean(item))
       .slice(0, 18);
   }, [sortedLaunches, tasks]);
 
@@ -1054,7 +1054,7 @@ export default function HomePage() {
       setError(null);
 
       try {
-        const [launchesResponse, tasksResponse] = await Promise.all([listProjects(), listTasks()]);
+        const [launchesResponse, tasksResponse] = await Promise.all([listLaunches(), listTasks()]);
         setLaunches(launchesResponse);
         setTasks(tasksResponse);
       } catch (fetchError) {
@@ -1123,7 +1123,7 @@ export default function HomePage() {
     setError(null);
 
     try {
-      const [launchesResponse, tasksResponse] = await Promise.all([listProjects(), listTasks()]);
+      const [launchesResponse, tasksResponse] = await Promise.all([listLaunches(), listTasks()]);
       setLaunches(launchesResponse);
       setTasks(tasksResponse);
       setNotice("Launch data synced");
@@ -1149,14 +1149,14 @@ export default function HomePage() {
   function openCreateLaunchModal() {
     setLaunchModalMode("create");
     setLaunchEditingId(null);
-    setLaunchForm(launchFormFromProject());
+    setLaunchForm(launchFormFromLaunch());
     setIsLaunchModalOpen(true);
   }
 
-  function openEditLaunchModal(launch: Project) {
+  function openEditLaunchModal(launch: Launch) {
     setLaunchModalMode("edit");
     setLaunchEditingId(launch.id);
-    setLaunchForm(launchFormFromProject(launch));
+    setLaunchForm(launchFormFromLaunch(launch));
     setIsLaunchModalOpen(true);
   }
 
@@ -1274,7 +1274,7 @@ export default function HomePage() {
     try {
       await apiDeleteLaunch(launchDeleteTarget.id);
       setLaunches((current) => current.filter((launch) => launch.id !== launchDeleteTarget.id));
-      setTasks((current) => current.filter((task) => task.projectId !== launchDeleteTarget.id));
+      setTasks((current) => current.filter((task) => task.launchId !== launchDeleteTarget.id));
       setFavoriteLaunchIds((current) => current.filter((id) => id !== launchDeleteTarget.id));
       setLaunchDeleteTarget(null);
       setNotice("Launch deleted");
@@ -1330,7 +1330,7 @@ export default function HomePage() {
       if (taskModalMode === "create") {
         const created = await apiCreateTask({
           ...payload,
-          projectId: activeLaunch?.id || null
+          launchId: activeLaunch?.id || null
         });
         setTasks((current) => [created, ...current]);
         setNotice("Task added");
@@ -1541,7 +1541,7 @@ export default function HomePage() {
               <div className="space-y-1">
                 {favoriteLaunches.length ? (
                   favoriteLaunches.map((launch) => {
-                    const visual = projectVisual(launch, themeMode);
+                    const visual = launchVisual(launch, themeMode);
                     const VisualIcon = visual.icon;
 
                     return (
@@ -1575,7 +1575,7 @@ export default function HomePage() {
             <div className="flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-lg font-medium leading-snug text-[var(--text-strong)]">
-                  Welcome to Zample! Your project managment solution for launching new food or beverages.
+                  Welcome to Zample! Your launch management solution for launching new food or beverages.
                 </p>
               </div>
 
@@ -1847,7 +1847,7 @@ export default function HomePage() {
                           const isActive = activeLaunch?.id === launch.id;
                           const isFavorite = favoriteLaunchIds.includes(launch.id);
                           const launchType = inferLaunchType(launch);
-                          const visual = projectVisual(launch, themeMode);
+                          const visual = launchVisual(launch, themeMode);
                           const VisualIcon = visual.icon;
 
                           return (
@@ -2556,7 +2556,7 @@ export default function HomePage() {
                                 {owner.launches} launches · {owner.openTasks} open tasks
                               </p>
                               <p className="mt-1 text-xs text-[var(--text-dim)]">
-                                Projects: {owner.launchProjects.join(", ")}
+                                Launches: {owner.launchTitles.join(", ")}
                               </p>
                             </div>
                             <div className="text-right">
@@ -2991,7 +2991,7 @@ export default function HomePage() {
                     onChange={(event) =>
                       setLaunchForm((current) => ({
                         ...current,
-                        stage: event.target.value as ProjectStage
+                        stage: event.target.value as LaunchStage
                       }))
                     }
                     title="Select launch stage"
@@ -3011,13 +3011,13 @@ export default function HomePage() {
                     onChange={(event) =>
                       setLaunchForm((current) => ({
                         ...current,
-                        priority: event.target.value as ProjectPriority
+                        priority: event.target.value as LaunchPriority
                       }))
                     }
                     title="Select launch priority"
                     className="h-10 w-full rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-3 text-sm text-[var(--text-base)] outline-none transition focus:border-cyan-400/45"
                   >
-                    {(["Low", "Medium", "High", "Urgent"] as ProjectPriority[]).map((priority) => (
+                    {(["Low", "Medium", "High", "Urgent"] as LaunchPriority[]).map((priority) => (
                       <option key={priority} value={priority}>
                         {priority}
                       </option>
@@ -3031,13 +3031,13 @@ export default function HomePage() {
                     onChange={(event) =>
                       setLaunchForm((current) => ({
                         ...current,
-                        riskLevel: event.target.value as ProjectRisk
+                        riskLevel: event.target.value as LaunchRisk
                       }))
                     }
                     title="Select launch risk level"
                     className="h-10 w-full rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-3 text-sm text-[var(--text-base)] outline-none transition focus:border-cyan-400/45"
                   >
-                    {(["Low", "Medium", "High"] as ProjectRisk[]).map((riskLevel) => (
+                    {(["Low", "Medium", "High"] as LaunchRisk[]).map((riskLevel) => (
                       <option key={riskLevel} value={riskLevel}>
                         {riskLevel}
                       </option>

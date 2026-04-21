@@ -1,6 +1,6 @@
 [
   {
-    "id": "proj_fiber_refresh",
+    "id": "launch_fiber_refresh",
     "title": "Fiber+ Granola Reformulation",
     "owner": "A. Nguyen",
     "stage": "In Validation",
@@ -19,7 +19,7 @@
       {
         "id": "st_nguyen",
         "name": "A. Nguyen",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "anguyen@zamplelabs.com"
       },
       {
@@ -39,7 +39,7 @@
     "updatedAt": "2026-04-18T15:05:00.000Z"
   },
   {
-    "id": "proj_alt_protein",
+    "id": "launch_alt_protein",
     "title": "Plant Protein Beverage v2",
     "owner": "S. Martinez",
     "stage": "Pilot",
@@ -58,7 +58,7 @@
       {
         "id": "st_smartinez",
         "name": "S. Martinez",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "smartinez@zamplelabs.com"
       },
       {
@@ -78,7 +78,7 @@
     "updatedAt": "2026-04-18T12:40:00.000Z"
   },
   {
-    "id": "proj_clean_label",
+    "id": "launch_clean_label",
     "title": "Clean Label Sauce Base",
     "owner": "K. Turner",
     "stage": "Intake",
@@ -97,7 +97,7 @@
       {
         "id": "st_kturner",
         "name": "K. Turner",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "kturner@zamplelabs.com"
       },
       {
@@ -111,7 +111,7 @@
     "updatedAt": "2026-04-17T08:20:00.000Z"
   },
   {
-    "id": "proj_sparkling_prebiotic",
+    "id": "launch_sparkling_prebiotic",
     "title": "Sparkling Prebiotic Water Line",
     "owner": "J. Kim",
     "stage": "In Validation",
@@ -130,7 +130,7 @@
       {
         "id": "st_jkim",
         "name": "J. Kim",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "jkim@zamplelabs.com"
       },
       {
@@ -150,7 +150,7 @@
     "updatedAt": "2026-04-19T16:42:00.000Z"
   },
   {
-    "id": "proj_keto_bbq",
+    "id": "launch_keto_bbq",
     "title": "Keto-Friendly BBQ Sauce",
     "owner": "R. Evans",
     "stage": "Pilot",
@@ -169,7 +169,7 @@
       {
         "id": "st_revans",
         "name": "R. Evans",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "revans@zamplelabs.com"
       },
       {
@@ -189,7 +189,7 @@
     "updatedAt": "2026-04-19T10:45:00.000Z"
   },
   {
-    "id": "proj_protein_crunch",
+    "id": "launch_protein_crunch",
     "title": "Protein Crunch Clusters",
     "owner": "H. Brooks",
     "stage": "Intake",
@@ -208,7 +208,7 @@
       {
         "id": "st_hbrooks",
         "name": "H. Brooks",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "hbrooks@zamplelabs.com"
       },
       {
@@ -222,7 +222,7 @@
     "updatedAt": "2026-04-18T09:12:00.000Z"
   },
   {
-    "id": "proj_zero_sugar_tea",
+    "id": "launch_zero_sugar_tea",
     "title": "Zero Sugar Iced Tea Refresh",
     "owner": "M. Diaz",
     "stage": "Production",
@@ -241,7 +241,7 @@
       {
         "id": "st_mdiaz",
         "name": "M. Diaz",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "mdiaz@zamplelabs.com"
       },
       {
@@ -261,7 +261,7 @@
     "updatedAt": "2026-04-20T12:05:00.000Z"
   },
   {
-    "id": "proj_avocado_aioli",
+    "id": "launch_avocado_aioli",
     "title": "Avocado Aioli Premium Line",
     "owner": "T. Clarke",
     "stage": "In Validation",
@@ -280,7 +280,7 @@
       {
         "id": "st_tclarke",
         "name": "T. Clarke",
-        "role": "Project Owner",
+        "role": "Launch Owner",
         "email": "tclarke@zamplelabs.com"
       },
       {

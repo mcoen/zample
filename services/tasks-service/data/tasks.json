@@ -7,10 +7,10 @@
     "dueDate": "2026-04-23",
     "priority": "High",
     "taskType": "Validation",
-    "projectId": "proj_fiber_refresh",
     "status": "in_progress",
     "createdAt": "2026-04-16T10:00:00.000Z",
-    "updatedAt": "2026-04-18T13:00:00.000Z"
+    "updatedAt": "2026-04-18T13:00:00.000Z",
+    "launchId": "launch_fiber_refresh"
   },
   {
     "id": "task_flavor_panel",
@@ -20,10 +20,10 @@
     "dueDate": "2026-04-21",
     "priority": "Medium",
     "taskType": "Sensory",
-    "projectId": "proj_alt_protein",
     "status": "todo",
     "createdAt": "2026-04-15T09:10:00.000Z",
-    "updatedAt": "2026-04-17T15:22:00.000Z"
+    "updatedAt": "2026-04-17T15:22:00.000Z",
+    "launchId": "launch_alt_protein"
   },
   {
     "id": "task_label_review",
@@ -33,9 +33,9 @@
     "dueDate": "2026-04-29",
     "priority": "Low",
     "taskType": "Regulatory",
-    "projectId": "proj_clean_label",
     "status": "done",
     "createdAt": "2026-04-14T07:40:00.000Z",
-    "updatedAt": "2026-04-16T17:48:00.000Z"
+    "updatedAt": "2026-04-16T17:48:00.000Z",
+    "launchId": "launch_clean_label"
   }
 ]

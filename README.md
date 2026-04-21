@@ -8,16 +8,16 @@ The initial design direction is inspired by Linear's focused, high-contrast prod
 
 - `apps/web` -> Next.js frontend (React + Tailwind)
 - `services/api-gateway` -> routes frontend requests to microservices
-- `services/projects-service` -> project domain service
+- `services/launches-service` -> launch domain service
 - `services/tasks-service` -> task domain service
 - `packages/document-store` -> shared local JSON document store abstraction
 
 ```mermaid
 flowchart LR
   A["Next.js Frontend\napps/web"] --> B["API Gateway\nservices/api-gateway"]
-  B --> C["Projects Service\nservices/projects-service"]
+  B --> C["Launches Service\nservices/launches-service"]
   B --> D["Tasks Service\nservices/tasks-service"]
-  C --> E["projects.json\nDocument Store"]
+  C --> E["launches.json\nDocument Store"]
   D --> F["tasks.json\nDocument Store"]
 ```
 
@@ -45,18 +45,18 @@ npm run dev
 
 - Frontend: `http://localhost:3000`
 - API Gateway: `http://localhost:4000/health`
-- Projects Service: `http://localhost:4101/health`
+- Launches Service: `http://localhost:4101/health`
 - Tasks Service: `http://localhost:4102/health`
 
 ## Service APIs
 
-### Projects
+### Launches
 
-- `GET /projects`
-- `GET /projects/:id`
-- `POST /projects`
-- `PATCH /projects/:id`
-- `DELETE /projects/:id`
+- `GET /launches`
+- `GET /launches/:id`
+- `POST /launches`
+- `PATCH /launches/:id`
+- `DELETE /launches/:id`
 
 ### Tasks
 
@@ -68,14 +68,14 @@ npm run dev
 
 Gateway routes:
 
-- `/api/projects` -> projects service
+- `/api/launches` -> launches service
 - `/api/tasks` -> tasks service
 
 ## Data Store Strategy (Current)
 
 Each service persists documents in local JSON files:
 
-- `services/projects-service/data/projects.json`
+- `services/launches-service/data/launches.json`
 - `services/tasks-service/data/tasks.json`
 
 This intentionally keeps development friction low while preserving a service-owned data boundary.
@@ -94,7 +94,7 @@ Recommended evolution path:
 
 Potential target mapping:
 
-- Projects service -> DynamoDB table: `zample-projects`
+- Launches service -> DynamoDB table: `zample-launches`
 - Tasks service -> DynamoDB table: `zample-tasks`
 
 ## Next Enhancements

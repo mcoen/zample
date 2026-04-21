@@ -8,7 +8,7 @@ dotenv.config();
 
 const PORT = Number(process.env.PORT || 4000);
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:3000";
-const PROJECTS_SERVICE_URL = process.env.PROJECTS_SERVICE_URL || "http://localhost:4101";
+const LAUNCHES_SERVICE_URL = process.env.LAUNCHES_SERVICE_URL || "http://localhost:4101";
 const TASKS_SERVICE_URL = process.env.TASKS_SERVICE_URL || "http://localhost:4102";
 
 const app = express();
@@ -68,18 +68,18 @@ app.get("/health", (_req, res) => {
     status: "ok",
     gateway: "zample-api-gateway",
     services: {
-      projects: PROJECTS_SERVICE_URL,
+      launches: LAUNCHES_SERVICE_URL,
       tasks: TASKS_SERVICE_URL
     }
   });
 });
 
 app.use(
-  "/api/projects",
+  "/api/launches",
   createProxy({
-    mountPath: "/api/projects",
-    serviceBaseUrl: PROJECTS_SERVICE_URL,
-    servicePath: "/projects"
+    mountPath: "/api/launches",
+    serviceBaseUrl: LAUNCHES_SERVICE_URL,
+    servicePath: "/launches"
   })
 );
 

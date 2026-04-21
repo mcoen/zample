@@ -47,7 +47,7 @@ class Task {
   +string? dueDate
   +TaskPriority priority
   +string taskType
-  +string? projectId
+  +string? launchId
   +TaskStatus status
   +string createdAt
   +string updatedAt
@@ -136,7 +136,7 @@ AuthSession ..> Launch : authorizes /launches route
 
 ## Notes
 
-- `Launch` maps to the API/service `Project` shape and is persisted in `services/projects-service/data/projects.json`.
+- `Launch` maps to the API/service `Launch` shape and is persisted in `services/launches-service/data/launches.json`.
 - `Task` maps to the API/service `Task` shape and is persisted in `services/tasks-service/data/tasks.json`.
 - `Participant` maps to `LaunchParty` and is embedded inside each `Launch` as `stakeholders`.
 - `ChatMessage` and `UserProfile` are currently UI-level state models.
