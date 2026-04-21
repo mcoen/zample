@@ -1,0 +1,25 @@
+{
+  "name": "zample",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n WEB,GATEWAY,PROJECTS,TASKS -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgYellow.bold\" \"npm run dev --workspace @zample/web\" \"npm run dev --workspace @zample/api-gateway\" \"npm run dev --workspace @zample/projects-service\" \"npm run dev --workspace @zample/tasks-service\"",
+    "dev:web": "npm run dev --workspace @zample/web",
+    "dev:gateway": "npm run dev --workspace @zample/api-gateway",
+    "dev:projects": "npm run dev --workspace @zample/projects-service",
+    "dev:tasks": "npm run dev --workspace @zample/tasks-service",
+    "build": "npm run build --workspace @zample/web",
+    "start": "npm run start --workspace @zample/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

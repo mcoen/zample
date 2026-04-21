@@ -1,0 +1,296 @@
+[
+  {
+    "id": "proj_fiber_refresh",
+    "title": "Fiber+ Granola Reformulation",
+    "owner": "A. Nguyen",
+    "stage": "In Validation",
+    "priority": "High",
+    "riskLevel": "Medium",
+    "dueDate": "2026-05-12",
+    "description": "Validate sweetness profile and shelf-stability after reducing sugar by 18% across pilot batches.",
+    "status": "active",
+    "workspaceId": "ws_snack_innovation",
+    "workspaceName": "Snack Innovation",
+    "workspaceType": "Snacks",
+    "category": "Granola",
+    "brand": "Fiber+",
+    "market": "US Grocery",
+    "stakeholders": [
+      {
+        "id": "st_nguyen",
+        "name": "A. Nguyen",
+        "role": "Project Owner",
+        "email": "anguyen@zamplelabs.com"
+      },
+      {
+        "id": "st_rcollins",
+        "name": "R. Collins",
+        "role": "R&D Scientist",
+        "email": "rcollins@zamplelabs.com"
+      },
+      {
+        "id": "st_mward",
+        "name": "M. Ward",
+        "role": "Regulatory Lead",
+        "email": "mward@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-15T14:22:00.000Z",
+    "updatedAt": "2026-04-18T15:05:00.000Z"
+  },
+  {
+    "id": "proj_alt_protein",
+    "title": "Plant Protein Beverage v2",
+    "owner": "S. Martinez",
+    "stage": "Pilot",
+    "priority": "Urgent",
+    "riskLevel": "High",
+    "dueDate": "2026-04-30",
+    "description": "Lock pilot-ready formula, verify thermal stability, and align go-to-market assets for East region launch.",
+    "status": "active",
+    "workspaceId": "ws_beverage_development",
+    "workspaceName": "Beverage Development",
+    "workspaceType": "Beverages",
+    "category": "Protein Drink",
+    "brand": "PulseFuel",
+    "market": "Convenience + Fitness",
+    "stakeholders": [
+      {
+        "id": "st_smartinez",
+        "name": "S. Martinez",
+        "role": "Project Owner",
+        "email": "smartinez@zamplelabs.com"
+      },
+      {
+        "id": "st_dpatel",
+        "name": "D. Patel",
+        "role": "Sensory Lead",
+        "email": "dpatel@zamplelabs.com"
+      },
+      {
+        "id": "st_jfoster",
+        "name": "J. Foster",
+        "role": "Commercialization",
+        "email": "jfoster@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-12T09:00:00.000Z",
+    "updatedAt": "2026-04-18T12:40:00.000Z"
+  },
+  {
+    "id": "proj_clean_label",
+    "title": "Clean Label Sauce Base",
+    "owner": "K. Turner",
+    "stage": "Intake",
+    "priority": "Medium",
+    "riskLevel": "Low",
+    "dueDate": "2026-06-02",
+    "description": "Scope alternatives to synthetic preservatives while preserving viscosity targets and shelf life.",
+    "status": "active",
+    "workspaceId": "ws_sauce_platforms",
+    "workspaceName": "Sauce Platforms",
+    "workspaceType": "Condiments",
+    "category": "Sauce",
+    "brand": "PureBase",
+    "market": "Foodservice",
+    "stakeholders": [
+      {
+        "id": "st_kturner",
+        "name": "K. Turner",
+        "role": "Project Owner",
+        "email": "kturner@zamplelabs.com"
+      },
+      {
+        "id": "st_lreyes",
+        "name": "L. Reyes",
+        "role": "Packaging Engineer",
+        "email": "lreyes@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-10T11:30:00.000Z",
+    "updatedAt": "2026-04-17T08:20:00.000Z"
+  },
+  {
+    "id": "proj_sparkling_prebiotic",
+    "title": "Sparkling Prebiotic Water Line",
+    "owner": "J. Kim",
+    "stage": "In Validation",
+    "priority": "High",
+    "riskLevel": "Medium",
+    "dueDate": "2026-05-28",
+    "description": "Finalize flavor masking, carbonation stability, and label claims for a three-SKU prebiotic water launch.",
+    "status": "active",
+    "workspaceId": "ws_beverage_development",
+    "workspaceName": "Beverage Development",
+    "workspaceType": "Beverages",
+    "category": "Functional Water",
+    "brand": "VivaFizz",
+    "market": "Mass Retail",
+    "stakeholders": [
+      {
+        "id": "st_jkim",
+        "name": "J. Kim",
+        "role": "Project Owner",
+        "email": "jkim@zamplelabs.com"
+      },
+      {
+        "id": "st_nmoore",
+        "name": "N. Moore",
+        "role": "R&D Scientist",
+        "email": "nmoore@zamplelabs.com"
+      },
+      {
+        "id": "st_wcho",
+        "name": "W. Cho",
+        "role": "Regulatory Manager",
+        "email": "wcho@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-07T13:25:00.000Z",
+    "updatedAt": "2026-04-19T16:42:00.000Z"
+  },
+  {
+    "id": "proj_keto_bbq",
+    "title": "Keto-Friendly BBQ Sauce",
+    "owner": "R. Evans",
+    "stage": "Pilot",
+    "priority": "Medium",
+    "riskLevel": "Medium",
+    "dueDate": "2026-06-15",
+    "description": "Pilot low-sugar formula with heat-fill processing while maintaining texture and smoke-forward flavor profile.",
+    "status": "active",
+    "workspaceId": "ws_sauce_platforms",
+    "workspaceName": "Sauce Platforms",
+    "workspaceType": "Condiments",
+    "category": "Sauce",
+    "brand": "Backyard Bold",
+    "market": "Club + Grocery",
+    "stakeholders": [
+      {
+        "id": "st_revans",
+        "name": "R. Evans",
+        "role": "Project Owner",
+        "email": "revans@zamplelabs.com"
+      },
+      {
+        "id": "st_pgilbert",
+        "name": "P. Gilbert",
+        "role": "Process Engineer",
+        "email": "pgilbert@zamplelabs.com"
+      },
+      {
+        "id": "st_byoung",
+        "name": "B. Young",
+        "role": "Packaging Lead",
+        "email": "byoung@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-05T10:10:00.000Z",
+    "updatedAt": "2026-04-19T10:45:00.000Z"
+  },
+  {
+    "id": "proj_protein_crunch",
+    "title": "Protein Crunch Clusters",
+    "owner": "H. Brooks",
+    "stage": "Intake",
+    "priority": "Low",
+    "riskLevel": "Low",
+    "dueDate": "2026-07-10",
+    "description": "Define concept and ingredient guardrails for a high-protein cluster snack targeted to active lifestyle consumers.",
+    "status": "active",
+    "workspaceId": "ws_snack_innovation",
+    "workspaceName": "Snack Innovation",
+    "workspaceType": "Snacks",
+    "category": "Cluster Snack",
+    "brand": "PeakBite",
+    "market": "Ecommerce + Natural",
+    "stakeholders": [
+      {
+        "id": "st_hbrooks",
+        "name": "H. Brooks",
+        "role": "Project Owner",
+        "email": "hbrooks@zamplelabs.com"
+      },
+      {
+        "id": "st_sali",
+        "name": "S. Ali",
+        "role": "Consumer Insights",
+        "email": "sali@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-03T08:45:00.000Z",
+    "updatedAt": "2026-04-18T09:12:00.000Z"
+  },
+  {
+    "id": "proj_zero_sugar_tea",
+    "title": "Zero Sugar Iced Tea Refresh",
+    "owner": "M. Diaz",
+    "stage": "Production",
+    "priority": "Urgent",
+    "riskLevel": "High",
+    "dueDate": "2026-04-26",
+    "description": "Complete final release checks and execute production cutover for zero-sugar tea relaunch with updated sweetener system.",
+    "status": "active",
+    "workspaceId": "ws_beverage_development",
+    "workspaceName": "Beverage Development",
+    "workspaceType": "Beverages",
+    "category": "Iced Tea",
+    "brand": "Sunstream",
+    "market": "National Retail",
+    "stakeholders": [
+      {
+        "id": "st_mdiaz",
+        "name": "M. Diaz",
+        "role": "Project Owner",
+        "email": "mdiaz@zamplelabs.com"
+      },
+      {
+        "id": "st_ctran",
+        "name": "C. Tran",
+        "role": "Quality Lead",
+        "email": "ctran@zamplelabs.com"
+      },
+      {
+        "id": "st_jperez",
+        "name": "J. Perez",
+        "role": "Operations Manager",
+        "email": "jperez@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-01T09:35:00.000Z",
+    "updatedAt": "2026-04-20T12:05:00.000Z"
+  },
+  {
+    "id": "proj_avocado_aioli",
+    "title": "Avocado Aioli Premium Line",
+    "owner": "T. Clarke",
+    "stage": "In Validation",
+    "priority": "Medium",
+    "riskLevel": "Low",
+    "dueDate": "2026-05-20",
+    "description": "Validate emulsion stability and refrigerated shelf-life performance for avocado-based aioli in squeeze format.",
+    "status": "active",
+    "workspaceId": "ws_sauce_platforms",
+    "workspaceName": "Sauce Platforms",
+    "workspaceType": "Condiments",
+    "category": "Aioli",
+    "brand": "GreenCraft",
+    "market": "Premium Grocery",
+    "stakeholders": [
+      {
+        "id": "st_tclarke",
+        "name": "T. Clarke",
+        "role": "Project Owner",
+        "email": "tclarke@zamplelabs.com"
+      },
+      {
+        "id": "st_ovega",
+        "name": "O. Vega",
+        "role": "Supply Planning",
+        "email": "ovega@zamplelabs.com"
+      }
+    ],
+    "createdAt": "2026-04-08T12:20:00.000Z",
+    "updatedAt": "2026-04-19T14:10:00.000Z"
+  }
+]

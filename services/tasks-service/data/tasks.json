@@ -1,0 +1,41 @@
+[
+  {
+    "id": "task_shelf_stability",
+    "title": "Run accelerated shelf-stability test (week 1)",
+    "description": "Capture texture and moisture drift by day and summarize pass/fail criteria.",
+    "assignee": "R. Collins",
+    "dueDate": "2026-04-23",
+    "priority": "High",
+    "taskType": "Validation",
+    "projectId": "proj_fiber_refresh",
+    "status": "in_progress",
+    "createdAt": "2026-04-16T10:00:00.000Z",
+    "updatedAt": "2026-04-18T13:00:00.000Z"
+  },
+  {
+    "id": "task_flavor_panel",
+    "title": "Schedule flavor panel with 12 internal tasters",
+    "description": "Book tasting room and lock comparator lineup for blind tasting.",
+    "assignee": "D. Patel",
+    "dueDate": "2026-04-21",
+    "priority": "Medium",
+    "taskType": "Sensory",
+    "projectId": "proj_alt_protein",
+    "status": "todo",
+    "createdAt": "2026-04-15T09:10:00.000Z",
+    "updatedAt": "2026-04-17T15:22:00.000Z"
+  },
+  {
+    "id": "task_label_review",
+    "title": "Draft clean label claim language for regulatory review",
+    "description": "Finalize claim wording with legal constraints and approved substantiation references.",
+    "assignee": "J. Foster",
+    "dueDate": "2026-04-29",
+    "priority": "Low",
+    "taskType": "Regulatory",
+    "projectId": "proj_clean_label",
+    "status": "done",
+    "createdAt": "2026-04-14T07:40:00.000Z",
+    "updatedAt": "2026-04-16T17:48:00.000Z"
+  }
+]
