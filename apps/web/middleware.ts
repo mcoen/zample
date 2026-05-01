@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 const SESSION_COOKIE = "zample_session";
+const SESSION_USER_COOKIE = "zample_user";
 
 function isPublicAsset(pathname: string) {
   return (
@@ -20,7 +21,9 @@ export function middleware(request: NextRequest) {
 
   const isLoginPage = pathname === "/login";
   const isLogoutRoute = pathname === "/logout";
-  const hasSession = request.cookies.get(SESSION_COOKIE)?.value === "active";
+  const hasSession =
+    request.cookies.get(SESSION_COOKIE)?.value === "active" &&
+    Boolean(request.cookies.get(SESSION_USER_COOKIE)?.value);
 
   if (pathname === "/") {
     const targetUrl = request.nextUrl.clone();

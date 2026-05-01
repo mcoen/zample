@@ -9,9 +9,7 @@
     "dueDate": "2026-05-12",
     "description": "Validate sweetness profile and shelf-stability after reducing sugar by 18% across pilot batches.",
     "status": "active",
-    "workspaceId": "ws_snack_innovation",
-    "workspaceName": "Snack Innovation",
-    "workspaceType": "Snacks",
+    "launchType": "Snacks",
     "category": "Granola",
     "brand": "Fiber+",
     "market": "US Grocery",
@@ -36,7 +34,168 @@
       }
     ],
     "createdAt": "2026-04-15T14:22:00.000Z",
-    "updatedAt": "2026-04-18T15:05:00.000Z"
+    "updatedAt": "2026-04-18T15:05:00.000Z",
+    "lifecycleStatus": "Draft",
+    "confirmationStatus": "Not Sent",
+    "intake": {
+      "demandCompanyName": "Northstar Foods",
+      "requesterName": "A. Nguyen",
+      "requestChannel": "Email",
+      "requestDetails": "Validate sweetness profile and shelf-stability after reducing sugar by 18% across pilot batches.",
+      "projectKind": "Library Sample",
+      "beverageClass": "Non-Beverage",
+      "targetLaunchTiming": "2026-05-12",
+      "knownCommercialOpportunity": true,
+      "estimatedAnnualVolume": "350k lbs/year",
+      "targetPrice": "$5.20",
+      "supplierProposedPrice": "$5.80",
+      "priceUnit": "per lb",
+      "priceSensitivity": "High"
+    },
+    "brief": {
+      "sampleType": "Ingredient Blend",
+      "targetFlavorProfile": "Toasted, nutty, low sweetness profile",
+      "flavorTags": [
+        "toasted",
+        "texture-forward"
+      ],
+      "creativeDirection": "Match Exactly",
+      "vendorSuggestionsRequested": false,
+      "vendorSuggestionNotes": "",
+      "application": "Granola",
+      "samplePhaseVolume": "10 kg pilot",
+      "commercialScaleEstimate": "150k lbs annually",
+      "sampleDueDate": "2026-05-12",
+      "milestoneDate": "2026-05-12",
+      "pricingRequestTiming": "Required Now",
+      "certificationsRequired": [
+        "Kosher",
+        "Non-GMO"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No artificial colors or high-intensity sweeteners",
+      "costTarget": "$4.80 per lb max",
+      "physicalFormat": "Powder",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Keep private: margin targets under review."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "CrunchLab Foods",
+        "GrainSmith Partners",
+        "Savory Trail Labs"
+      ],
+      "suggestedVendors": [
+        "Texture Forge",
+        "FiberNorth Ingredients",
+        "Peak Pantry Co."
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_fiber_refresh_1",
+          "name": "CrunchLab Foods",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Snack seasoning systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_fiber_refresh_2",
+          "name": "GrainSmith Partners",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Snack seasoning systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_fiber_refresh_3",
+          "name": "Texture Forge",
+          "source": "suggested",
+          "included": true,
+          "priority": 3,
+          "expertise": "Snack seasoning systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Blind"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_fiber_refresh_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_fiber_refresh/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_fiber_refresh_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_fiber_refresh/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_fiber_refresh_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_fiber_refresh_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "A. Nguyen"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_crunchlab_foods",
+      "name": "CrunchLab Foods",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_northstar_foods",
+      "name": "Northstar Foods",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_crunchlab_foods__org_demand_northstar_foods",
+      "vendorOrgId": "org_vendor_crunchlab_foods",
+      "demandOrgId": "org_demand_northstar_foods",
+      "status": "active",
+      "owner": "A. Nguyen"
+    },
+    "vendorOrgId": "org_vendor_crunchlab_foods",
+    "demandOrgId": "org_demand_northstar_foods"
   },
   {
     "id": "launch_alt_protein",
@@ -48,9 +207,7 @@
     "dueDate": "2026-04-30",
     "description": "Lock pilot-ready formula, verify thermal stability, and align go-to-market assets for East region launch.",
     "status": "active",
-    "workspaceId": "ws_beverage_development",
-    "workspaceName": "Beverage Development",
-    "workspaceType": "Beverages",
+    "launchType": "Beverages",
     "category": "Protein Drink",
     "brand": "PulseFuel",
     "market": "Convenience + Fitness",
@@ -75,7 +232,167 @@
       }
     ],
     "createdAt": "2026-04-12T09:00:00.000Z",
-    "updatedAt": "2026-04-18T12:40:00.000Z"
+    "updatedAt": "2026-04-18T12:40:00.000Z",
+    "lifecycleStatus": "Sent to Demand Company",
+    "confirmationStatus": "Sent",
+    "intake": {
+      "demandCompanyName": "Catalyst CPG",
+      "requesterName": "S. Martinez",
+      "requestChannel": "Phone",
+      "requestDetails": "Lock pilot-ready formula, verify thermal stability, and align go-to-market assets for East region launch.",
+      "projectKind": "Real Project",
+      "beverageClass": "Beverage",
+      "targetLaunchTiming": "2026-04-30",
+      "knownCommercialOpportunity": false,
+      "estimatedAnnualVolume": "95k lbs/year",
+      "targetPrice": "$5.55",
+      "supplierProposedPrice": "$6.14",
+      "priceUnit": "per lb",
+      "priceSensitivity": "Medium"
+    },
+    "brief": {
+      "sampleType": "Flavor System",
+      "targetFlavorProfile": "Bright top-notes with cleaner finish",
+      "flavorTags": [
+        "citrus",
+        "refreshing"
+      ],
+      "creativeDirection": "Open Innovation",
+      "vendorSuggestionsRequested": true,
+      "vendorSuggestionNotes": "Please provide one lower-cost alternative.",
+      "application": "Protein Drink",
+      "samplePhaseVolume": "12 kg pilot",
+      "commercialScaleEstimate": "175k lbs annually",
+      "sampleDueDate": "2026-04-30",
+      "milestoneDate": "2026-04-30",
+      "pricingRequestTiming": "Required Later",
+      "certificationsRequired": [
+        "Organic"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No palm oil, limit sodium impact",
+      "costTarget": "$5.10 per lb max",
+      "physicalFormat": "Liquid",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Prioritize speed for demand company innovation sprint."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "FlavorWorks Labs",
+        "BluePeak Beverage Systems",
+        "CitrusCraft Ingredients"
+      ],
+      "suggestedVendors": [
+        "HydraTaste Collective",
+        "BrightBrew Components",
+        "Arbor Flavor Group"
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_alt_protein_1",
+          "name": "FlavorWorks Labs",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_alt_protein_2",
+          "name": "BluePeak Beverage Systems",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_alt_protein_3",
+          "name": "HydraTaste Collective",
+          "source": "suggested",
+          "included": false,
+          "priority": 3,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Visible"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_alt_protein_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_alt_protein/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_alt_protein_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_alt_protein/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_alt_protein_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_alt_protein_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "S. Martinez"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_flavorworks_labs",
+      "name": "FlavorWorks Labs",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_catalyst_cpg",
+      "name": "Catalyst CPG",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_flavorworks_labs__org_demand_catalyst_cpg",
+      "vendorOrgId": "org_vendor_flavorworks_labs",
+      "demandOrgId": "org_demand_catalyst_cpg",
+      "status": "active",
+      "owner": "S. Martinez"
+    },
+    "vendorOrgId": "org_vendor_flavorworks_labs",
+    "demandOrgId": "org_demand_catalyst_cpg"
   },
   {
     "id": "launch_clean_label",
@@ -87,9 +404,7 @@
     "dueDate": "2026-06-02",
     "description": "Scope alternatives to synthetic preservatives while preserving viscosity targets and shelf life.",
     "status": "active",
-    "workspaceId": "ws_sauce_platforms",
-    "workspaceName": "Sauce Platforms",
-    "workspaceType": "Condiments",
+    "launchType": "Condiments",
     "category": "Sauce",
     "brand": "PureBase",
     "market": "Foodservice",
@@ -108,7 +423,168 @@
       }
     ],
     "createdAt": "2026-04-10T11:30:00.000Z",
-    "updatedAt": "2026-04-17T08:20:00.000Z"
+    "updatedAt": "2026-04-17T08:20:00.000Z",
+    "lifecycleStatus": "Confirmed by Demand Company",
+    "confirmationStatus": "Confirmed",
+    "intake": {
+      "demandCompanyName": "Sunline Grocer",
+      "requesterName": "K. Turner",
+      "requestChannel": "Meeting",
+      "requestDetails": "Scope alternatives to synthetic preservatives while preserving viscosity targets and shelf life.",
+      "projectKind": "Real Project",
+      "beverageClass": "Non-Beverage",
+      "targetLaunchTiming": "2026-06-02",
+      "knownCommercialOpportunity": true,
+      "estimatedAnnualVolume": "430k lbs/year",
+      "targetPrice": "$5.90",
+      "supplierProposedPrice": "$6.48",
+      "priceUnit": "per lb",
+      "priceSensitivity": "High"
+    },
+    "brief": {
+      "sampleType": "Seasoning / Compound",
+      "targetFlavorProfile": "Savory depth with mild heat",
+      "flavorTags": [
+        "savory",
+        "umami"
+      ],
+      "creativeDirection": "Match Exactly",
+      "vendorSuggestionsRequested": false,
+      "vendorSuggestionNotes": "",
+      "application": "Sauce",
+      "samplePhaseVolume": "14 kg pilot",
+      "commercialScaleEstimate": "200k lbs annually",
+      "sampleDueDate": "2026-06-02",
+      "milestoneDate": "2026-06-02",
+      "pricingRequestTiming": "Not Needed Yet",
+      "certificationsRequired": [
+        "Kosher",
+        "Non-GMO"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No artificial colors or high-intensity sweeteners",
+      "costTarget": "$5.40 per lb max",
+      "physicalFormat": "Powder",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Keep private: margin targets under review."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "SauceForge Solutions",
+        "SpiceRoute Co.",
+        "Heritage Blends"
+      ],
+      "suggestedVendors": [
+        "Fermenta Labs",
+        "Umami Foundry",
+        "Coastal Culinary Systems"
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_clean_label_1",
+          "name": "SauceForge Solutions",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_clean_label_2",
+          "name": "SpiceRoute Co.",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_clean_label_3",
+          "name": "Fermenta Labs",
+          "source": "suggested",
+          "included": true,
+          "priority": 3,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Visible"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_clean_label_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_clean_label/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_clean_label_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_clean_label/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_clean_label_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_clean_label_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "K. Turner"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_sauceforge_solutions",
+      "name": "SauceForge Solutions",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_sunline_grocer",
+      "name": "Sunline Grocer",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_sauceforge_solutions__org_demand_sunline_grocer",
+      "vendorOrgId": "org_vendor_sauceforge_solutions",
+      "demandOrgId": "org_demand_sunline_grocer",
+      "status": "active",
+      "owner": "K. Turner"
+    },
+    "vendorOrgId": "org_vendor_sauceforge_solutions",
+    "demandOrgId": "org_demand_sunline_grocer"
   },
   {
     "id": "launch_sparkling_prebiotic",
@@ -120,9 +596,7 @@
     "dueDate": "2026-05-28",
     "description": "Finalize flavor masking, carbonation stability, and label claims for a three-SKU prebiotic water launch.",
     "status": "active",
-    "workspaceId": "ws_beverage_development",
-    "workspaceName": "Beverage Development",
-    "workspaceType": "Beverages",
+    "launchType": "Beverages",
     "category": "Functional Water",
     "brand": "VivaFizz",
     "market": "Mass Retail",
@@ -147,7 +621,167 @@
       }
     ],
     "createdAt": "2026-04-07T13:25:00.000Z",
-    "updatedAt": "2026-04-19T16:42:00.000Z"
+    "updatedAt": "2026-04-19T16:42:00.000Z",
+    "lifecycleStatus": "In Review",
+    "confirmationStatus": "Needs Update",
+    "intake": {
+      "demandCompanyName": "WellSpring Markets",
+      "requesterName": "J. Kim",
+      "requestChannel": "Portal",
+      "requestDetails": "Finalize flavor masking, carbonation stability, and label claims for a three-SKU prebiotic water launch.",
+      "projectKind": "Library Sample",
+      "beverageClass": "Beverage",
+      "targetLaunchTiming": "2026-05-28",
+      "knownCommercialOpportunity": false,
+      "estimatedAnnualVolume": "125k lbs/year",
+      "targetPrice": "$6.25",
+      "supplierProposedPrice": "$6.82",
+      "priceUnit": "per lb",
+      "priceSensitivity": "Medium"
+    },
+    "brief": {
+      "sampleType": "Flavor System",
+      "targetFlavorProfile": "Bright top-notes with cleaner finish",
+      "flavorTags": [
+        "citrus",
+        "refreshing"
+      ],
+      "creativeDirection": "Open Innovation",
+      "vendorSuggestionsRequested": true,
+      "vendorSuggestionNotes": "Please provide one lower-cost alternative.",
+      "application": "Functional Water",
+      "samplePhaseVolume": "16 kg pilot",
+      "commercialScaleEstimate": "225k lbs annually",
+      "sampleDueDate": "2026-05-28",
+      "milestoneDate": "2026-05-28",
+      "pricingRequestTiming": "Required Now",
+      "certificationsRequired": [
+        "Organic"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No palm oil, limit sodium impact",
+      "costTarget": "$5.70 per lb max",
+      "physicalFormat": "Liquid",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Prioritize speed for demand company innovation sprint."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "FlavorWorks Labs",
+        "BluePeak Beverage Systems",
+        "CitrusCraft Ingredients"
+      ],
+      "suggestedVendors": [
+        "HydraTaste Collective",
+        "BrightBrew Components",
+        "Arbor Flavor Group"
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_sparkling_prebiotic_1",
+          "name": "FlavorWorks Labs",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_sparkling_prebiotic_2",
+          "name": "BluePeak Beverage Systems",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_sparkling_prebiotic_3",
+          "name": "HydraTaste Collective",
+          "source": "suggested",
+          "included": false,
+          "priority": 3,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Blind"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_sparkling_prebiotic_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_sparkling_prebiotic/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_sparkling_prebiotic_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_sparkling_prebiotic/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_sparkling_prebiotic_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_sparkling_prebiotic_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "J. Kim"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_flavorworks_labs",
+      "name": "FlavorWorks Labs",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_wellspring_markets",
+      "name": "WellSpring Markets",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_flavorworks_labs__org_demand_wellspring_markets",
+      "vendorOrgId": "org_vendor_flavorworks_labs",
+      "demandOrgId": "org_demand_wellspring_markets",
+      "status": "active",
+      "owner": "J. Kim"
+    },
+    "vendorOrgId": "org_vendor_flavorworks_labs",
+    "demandOrgId": "org_demand_wellspring_markets"
   },
   {
     "id": "launch_keto_bbq",
@@ -159,9 +793,7 @@
     "dueDate": "2026-06-15",
     "description": "Pilot low-sugar formula with heat-fill processing while maintaining texture and smoke-forward flavor profile.",
     "status": "active",
-    "workspaceId": "ws_sauce_platforms",
-    "workspaceName": "Sauce Platforms",
-    "workspaceType": "Condiments",
+    "launchType": "Condiments",
     "category": "Sauce",
     "brand": "Backyard Bold",
     "market": "Club + Grocery",
@@ -186,7 +818,168 @@
       }
     ],
     "createdAt": "2026-04-05T10:10:00.000Z",
-    "updatedAt": "2026-04-19T10:45:00.000Z"
+    "updatedAt": "2026-04-19T10:45:00.000Z",
+    "lifecycleStatus": "Clarification Needed",
+    "confirmationStatus": "Not Sent",
+    "intake": {
+      "demandCompanyName": "Harvest Brands",
+      "requesterName": "R. Evans",
+      "requestChannel": "Email",
+      "requestDetails": "Pilot low-sugar formula with heat-fill processing while maintaining texture and smoke-forward flavor profile.",
+      "projectKind": "Real Project",
+      "beverageClass": "Non-Beverage",
+      "targetLaunchTiming": "2026-06-15",
+      "knownCommercialOpportunity": true,
+      "estimatedAnnualVolume": "510k lbs/year",
+      "targetPrice": "$6.60",
+      "supplierProposedPrice": "$7.16",
+      "priceUnit": "per lb",
+      "priceSensitivity": "High"
+    },
+    "brief": {
+      "sampleType": "Seasoning / Compound",
+      "targetFlavorProfile": "Savory depth with mild heat",
+      "flavorTags": [
+        "savory",
+        "umami"
+      ],
+      "creativeDirection": "Match Exactly",
+      "vendorSuggestionsRequested": false,
+      "vendorSuggestionNotes": "",
+      "application": "Sauce",
+      "samplePhaseVolume": "18 kg pilot",
+      "commercialScaleEstimate": "250k lbs annually",
+      "sampleDueDate": "2026-06-15",
+      "milestoneDate": "2026-06-15",
+      "pricingRequestTiming": "Required Later",
+      "certificationsRequired": [
+        "Kosher",
+        "Non-GMO"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No artificial colors or high-intensity sweeteners",
+      "costTarget": "$6.00 per lb max",
+      "physicalFormat": "Powder",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Keep private: margin targets under review."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "SauceForge Solutions",
+        "SpiceRoute Co.",
+        "Heritage Blends"
+      ],
+      "suggestedVendors": [
+        "Fermenta Labs",
+        "Umami Foundry",
+        "Coastal Culinary Systems"
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_keto_bbq_1",
+          "name": "SauceForge Solutions",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_keto_bbq_2",
+          "name": "SpiceRoute Co.",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_keto_bbq_3",
+          "name": "Fermenta Labs",
+          "source": "suggested",
+          "included": true,
+          "priority": 3,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Visible"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_keto_bbq_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_keto_bbq/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_keto_bbq_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_keto_bbq/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_keto_bbq_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_keto_bbq_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "R. Evans"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_sauceforge_solutions",
+      "name": "SauceForge Solutions",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_harvest_brands",
+      "name": "Harvest Brands",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_sauceforge_solutions__org_demand_harvest_brands",
+      "vendorOrgId": "org_vendor_sauceforge_solutions",
+      "demandOrgId": "org_demand_harvest_brands",
+      "status": "active",
+      "owner": "R. Evans"
+    },
+    "vendorOrgId": "org_vendor_sauceforge_solutions",
+    "demandOrgId": "org_demand_harvest_brands"
   },
   {
     "id": "launch_protein_crunch",
@@ -198,9 +991,7 @@
     "dueDate": "2026-07-10",
     "description": "Define concept and ingredient guardrails for a high-protein cluster snack targeted to active lifestyle consumers.",
     "status": "active",
-    "workspaceId": "ws_snack_innovation",
-    "workspaceName": "Snack Innovation",
-    "workspaceType": "Snacks",
+    "launchType": "Snacks",
     "category": "Cluster Snack",
     "brand": "PeakBite",
     "market": "Ecommerce + Natural",
@@ -219,7 +1010,167 @@
       }
     ],
     "createdAt": "2026-04-03T08:45:00.000Z",
-    "updatedAt": "2026-04-18T09:12:00.000Z"
+    "updatedAt": "2026-04-18T09:12:00.000Z",
+    "lifecycleStatus": "Approved for Sampling",
+    "confirmationStatus": "Sent",
+    "intake": {
+      "demandCompanyName": "Urban Pantry",
+      "requesterName": "H. Brooks",
+      "requestChannel": "Phone",
+      "requestDetails": "Define concept and ingredient guardrails for a high-protein cluster snack targeted to active lifestyle consumers.",
+      "projectKind": "Real Project",
+      "beverageClass": "Beverage",
+      "targetLaunchTiming": "2026-07-10",
+      "knownCommercialOpportunity": false,
+      "estimatedAnnualVolume": "155k lbs/year",
+      "targetPrice": "$6.95",
+      "supplierProposedPrice": "$7.50",
+      "priceUnit": "per lb",
+      "priceSensitivity": "Medium"
+    },
+    "brief": {
+      "sampleType": "Flavor System",
+      "targetFlavorProfile": "Bright top-notes with cleaner finish",
+      "flavorTags": [
+        "citrus",
+        "refreshing"
+      ],
+      "creativeDirection": "Open Innovation",
+      "vendorSuggestionsRequested": true,
+      "vendorSuggestionNotes": "Please provide one lower-cost alternative.",
+      "application": "Cluster Snack",
+      "samplePhaseVolume": "20 kg pilot",
+      "commercialScaleEstimate": "275k lbs annually",
+      "sampleDueDate": "2026-07-10",
+      "milestoneDate": "2026-07-10",
+      "pricingRequestTiming": "Not Needed Yet",
+      "certificationsRequired": [
+        "Organic"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No palm oil, limit sodium impact",
+      "costTarget": "$6.30 per lb max",
+      "physicalFormat": "Liquid",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Prioritize speed for demand company innovation sprint."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "FlavorWorks Labs",
+        "BluePeak Beverage Systems",
+        "CitrusCraft Ingredients"
+      ],
+      "suggestedVendors": [
+        "HydraTaste Collective",
+        "BrightBrew Components",
+        "Arbor Flavor Group"
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_protein_crunch_1",
+          "name": "FlavorWorks Labs",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_protein_crunch_2",
+          "name": "BluePeak Beverage Systems",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_protein_crunch_3",
+          "name": "HydraTaste Collective",
+          "source": "suggested",
+          "included": false,
+          "priority": 3,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Visible"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_protein_crunch_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_protein_crunch/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_protein_crunch_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_protein_crunch/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_protein_crunch_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_protein_crunch_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "H. Brooks"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_flavorworks_labs",
+      "name": "FlavorWorks Labs",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_urban_pantry",
+      "name": "Urban Pantry",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_flavorworks_labs__org_demand_urban_pantry",
+      "vendorOrgId": "org_vendor_flavorworks_labs",
+      "demandOrgId": "org_demand_urban_pantry",
+      "status": "active",
+      "owner": "H. Brooks"
+    },
+    "vendorOrgId": "org_vendor_flavorworks_labs",
+    "demandOrgId": "org_demand_urban_pantry"
   },
   {
     "id": "launch_zero_sugar_tea",
@@ -231,9 +1182,7 @@
     "dueDate": "2026-04-26",
     "description": "Complete final release checks and execute production cutover for zero-sugar tea relaunch with updated sweetener system.",
     "status": "active",
-    "workspaceId": "ws_beverage_development",
-    "workspaceName": "Beverage Development",
-    "workspaceType": "Beverages",
+    "launchType": "Beverages",
     "category": "Iced Tea",
     "brand": "Sunstream",
     "market": "National Retail",
@@ -258,7 +1207,168 @@
       }
     ],
     "createdAt": "2026-04-01T09:35:00.000Z",
-    "updatedAt": "2026-04-20T12:05:00.000Z"
+    "updatedAt": "2026-04-20T12:05:00.000Z",
+    "lifecycleStatus": "Sample Shipped",
+    "confirmationStatus": "Confirmed",
+    "intake": {
+      "demandCompanyName": "PureWave Retail",
+      "requesterName": "M. Diaz",
+      "requestChannel": "Meeting",
+      "requestDetails": "Complete final release checks and execute production cutover for zero-sugar tea relaunch with updated sweetener system.",
+      "projectKind": "Library Sample",
+      "beverageClass": "Beverage",
+      "targetLaunchTiming": "2026-04-26",
+      "knownCommercialOpportunity": true,
+      "estimatedAnnualVolume": "590k lbs/year",
+      "targetPrice": "$7.30",
+      "supplierProposedPrice": "$7.84",
+      "priceUnit": "per lb",
+      "priceSensitivity": "High"
+    },
+    "brief": {
+      "sampleType": "Flavor System",
+      "targetFlavorProfile": "Bright top-notes with cleaner finish",
+      "flavorTags": [
+        "citrus",
+        "refreshing"
+      ],
+      "creativeDirection": "Match Exactly",
+      "vendorSuggestionsRequested": false,
+      "vendorSuggestionNotes": "",
+      "application": "Iced Tea",
+      "samplePhaseVolume": "22 kg pilot",
+      "commercialScaleEstimate": "300k lbs annually",
+      "sampleDueDate": "2026-04-26",
+      "milestoneDate": "2026-04-26",
+      "pricingRequestTiming": "Required Now",
+      "certificationsRequired": [
+        "Kosher",
+        "Non-GMO"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No artificial colors or high-intensity sweeteners",
+      "costTarget": "$6.60 per lb max",
+      "physicalFormat": "Liquid",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Keep private: margin targets under review."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "FlavorWorks Labs",
+        "BluePeak Beverage Systems",
+        "CitrusCraft Ingredients"
+      ],
+      "suggestedVendors": [
+        "HydraTaste Collective",
+        "BrightBrew Components",
+        "Arbor Flavor Group"
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_zero_sugar_tea_1",
+          "name": "FlavorWorks Labs",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_zero_sugar_tea_2",
+          "name": "BluePeak Beverage Systems",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_zero_sugar_tea_3",
+          "name": "HydraTaste Collective",
+          "source": "suggested",
+          "included": true,
+          "priority": 3,
+          "expertise": "Beverage flavor systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Blind"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_zero_sugar_tea_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_zero_sugar_tea/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_zero_sugar_tea_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_zero_sugar_tea/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_zero_sugar_tea_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_zero_sugar_tea_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "M. Diaz"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_flavorworks_labs",
+      "name": "FlavorWorks Labs",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_purewave_retail",
+      "name": "PureWave Retail",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_flavorworks_labs__org_demand_purewave_retail",
+      "vendorOrgId": "org_vendor_flavorworks_labs",
+      "demandOrgId": "org_demand_purewave_retail",
+      "status": "active",
+      "owner": "M. Diaz"
+    },
+    "vendorOrgId": "org_vendor_flavorworks_labs",
+    "demandOrgId": "org_demand_purewave_retail"
   },
   {
     "id": "launch_avocado_aioli",
@@ -270,9 +1380,7 @@
     "dueDate": "2026-05-20",
     "description": "Validate emulsion stability and refrigerated shelf-life performance for avocado-based aioli in squeeze format.",
     "status": "active",
-    "workspaceId": "ws_sauce_platforms",
-    "workspaceName": "Sauce Platforms",
-    "workspaceType": "Condiments",
+    "launchType": "Condiments",
     "category": "Aioli",
     "brand": "GreenCraft",
     "market": "Premium Grocery",
@@ -291,6 +1399,166 @@
       }
     ],
     "createdAt": "2026-04-08T12:20:00.000Z",
-    "updatedAt": "2026-04-19T14:10:00.000Z"
+    "updatedAt": "2026-04-19T14:10:00.000Z",
+    "lifecycleStatus": "Awaiting Demand Feedback",
+    "confirmationStatus": "Needs Update",
+    "intake": {
+      "demandCompanyName": "Golden Table",
+      "requesterName": "T. Clarke",
+      "requestChannel": "Portal",
+      "requestDetails": "Validate emulsion stability and refrigerated shelf-life performance for avocado-based aioli in squeeze format.",
+      "projectKind": "Real Project",
+      "beverageClass": "Non-Beverage",
+      "targetLaunchTiming": "2026-05-20",
+      "knownCommercialOpportunity": false,
+      "estimatedAnnualVolume": "185k lbs/year",
+      "targetPrice": "$7.65",
+      "supplierProposedPrice": "$8.18",
+      "priceUnit": "per lb",
+      "priceSensitivity": "Medium"
+    },
+    "brief": {
+      "sampleType": "Seasoning / Compound",
+      "targetFlavorProfile": "Savory depth with mild heat",
+      "flavorTags": [
+        "savory",
+        "umami"
+      ],
+      "creativeDirection": "Open Innovation",
+      "vendorSuggestionsRequested": true,
+      "vendorSuggestionNotes": "Please provide one lower-cost alternative.",
+      "application": "Aioli",
+      "samplePhaseVolume": "24 kg pilot",
+      "commercialScaleEstimate": "325k lbs annually",
+      "sampleDueDate": "2026-05-20",
+      "milestoneDate": "2026-05-20",
+      "pricingRequestTiming": "Required Later",
+      "certificationsRequired": [
+        "Organic"
+      ],
+      "regulatoryDocumentation": [
+        "SDS",
+        "Allergen Statement",
+        "Nutrition Data"
+      ],
+      "ingredientConstraints": "No palm oil, limit sodium impact",
+      "costTarget": "$6.90 per lb max",
+      "physicalFormat": "Powder",
+      "stabilityRequirements": "6 month ambient stability and temperature tolerance through transit",
+      "packagingSampleSize": "2 x 1kg samples",
+      "deliveryFormat": "Ambient courier in insulated packaging",
+      "referenceProducts": "Benchmark against category leader and one private label comparator",
+      "internalNotes": "Prioritize speed for demand company innovation sprint."
+    },
+    "vendorSelection": {
+      "approvedVendors": [
+        "SauceForge Solutions",
+        "SpiceRoute Co.",
+        "Heritage Blends"
+      ],
+      "suggestedVendors": [
+        "Fermenta Labs",
+        "Umami Foundry",
+        "Coastal Culinary Systems"
+      ],
+      "selectedVendors": [
+        {
+          "id": "vendor_launch_avocado_aioli_1",
+          "name": "SauceForge Solutions",
+          "source": "approved",
+          "included": true,
+          "priority": 1,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_avocado_aioli_2",
+          "name": "SpiceRoute Co.",
+          "source": "approved",
+          "included": true,
+          "priority": 2,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        },
+        {
+          "id": "vendor_launch_avocado_aioli_3",
+          "name": "Fermenta Labs",
+          "source": "suggested",
+          "included": false,
+          "priority": 3,
+          "expertise": "Savory/condiment systems",
+          "certifications": "Kosher, Non-GMO"
+        }
+      ],
+      "requestVisibility": "Visible"
+    },
+    "attachments": [
+      {
+        "id": "att_launch_avocado_aioli_brief",
+        "name": "Demand Brief",
+        "fileType": "PDF",
+        "category": "Brief",
+        "url": "/docs/launch_avocado_aioli/demand-brief.pdf",
+        "visibility": "Shared",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      },
+      {
+        "id": "att_launch_avocado_aioli_reg",
+        "name": "Regulatory Checklist",
+        "fileType": "DOCX",
+        "category": "Regulatory",
+        "url": "/docs/launch_avocado_aioli/regulatory-checklist.docx",
+        "visibility": "Internal",
+        "uploadedAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "requiredComplianceDocuments": [
+      "COA",
+      "Allergen Statement",
+      "Kosher Certificate"
+    ],
+    "feedbackLog": [
+      {
+        "id": "fb_launch_avocado_aioli_1",
+        "author": "Vendor Team",
+        "type": "Acknowledgement",
+        "note": "Request received and scoped. Initial feasibility review in progress.",
+        "status": "Resolved",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "messageThread": [
+      {
+        "id": "msg_launch_avocado_aioli_1",
+        "sender": "Vendor Sales Rep",
+        "recipients": [
+          "T. Clarke"
+        ],
+        "text": "Please confirm we captured the key sample constraints before vendor kickoff.",
+        "tag": "Clarification",
+        "unresolved": true,
+        "fieldRef": "brief.ingredientConstraints",
+        "createdAt": "2026-04-30T13:12:19.178Z"
+      }
+    ],
+    "vendorOrg": {
+      "id": "org_vendor_sauceforge_solutions",
+      "name": "SauceForge Solutions",
+      "type": "vendor"
+    },
+    "demandOrg": {
+      "id": "org_demand_golden_table",
+      "name": "Golden Table",
+      "type": "demand"
+    },
+    "organizationRelationship": {
+      "id": "org_vendor_sauceforge_solutions__org_demand_golden_table",
+      "vendorOrgId": "org_vendor_sauceforge_solutions",
+      "demandOrgId": "org_demand_golden_table",
+      "status": "active",
+      "owner": "T. Clarke"
+    },
+    "vendorOrgId": "org_vendor_sauceforge_solutions",
+    "demandOrgId": "org_demand_golden_table"
   }
 ]

@@ -1,5 +1,12 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import {
+  authenticateSeedUser,
+  encodeSessionUser,
+  getSeedAccountSummaries,
+  SESSION_COOKIE_NAME,
+  SESSION_USER_COOKIE_NAME
+} from "@/lib/auth";
 import styles from "./page.module.css";
 
 function sanitizeNextPath(pathname: string) {
@@ -18,10 +25,23 @@ async function loginAction(formData: FormData) {
   const nextPath = sanitizeNextPath(String(formData.get("next") || "/launches"));
 
   if (!email || !password) {
-    redirect("/login");
+    redirect(`/login?error=missing_credentials&next=${encodeURIComponent(nextPath)}`);
   }
 
-  cookies().set("zample_session", "active", {
+  const sessionUser = authenticateSeedUser(email, password);
+
+  if (!sessionUser) {
+    redirect(`/login?error=invalid_credentials&next=${encodeURIComponent(nextPath)}`);
+  }
+
+  cookies().set(SESSION_COOKIE_NAME, "active", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false,
+    path: "/",
+    maxAge: 60 * 60 * 12
+  });
+  cookies().set(SESSION_USER_COOKIE_NAME, encodeSessionUser(sessionUser), {
     httpOnly: true,
     sameSite: "lax",
     secure: false,
@@ -35,12 +55,20 @@ async function loginAction(formData: FormData) {
 export default function LoginPage({
   searchParams
 }: {
-  searchParams?: { next?: string };
+  searchParams?: { next?: string; error?: string };
 }) {
   const nextPath = sanitizeNextPath(String(searchParams?.next || "/launches"));
+  const errorCode = String(searchParams?.error || "");
+  const seedAccounts = getSeedAccountSummaries();
+  const authErrorMessage =
+    errorCode === "invalid_credentials"
+      ? "Invalid account or password. Use one of the seeded marketplace role accounts below."
+      : errorCode === "missing_credentials"
+        ? "Enter both account and password."
+        : "";
 
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} app-shell`}>
       <div className={styles.background} />
       <div className={styles.overlay} />
 
@@ -58,12 +86,28 @@ export default function LoginPage({
             <p className={styles.kicker}>Zample Platform</p>
             <h1 className={styles.title}>Sign in to continue</h1>
             <p className={styles.subtitle}>
-              Launch food and beverage products with a shared workspace for your team.
+              Match demand companies launching products with flavor vendors supplying formulations.
             </p>
           </div>
 
           <form action={loginAction} className={styles.form}>
             <input type="hidden" name="next" value={nextPath} />
+            {authErrorMessage ? (
+              <p
+                style={{
+                  margin: "0 0 6px 0",
+                  border: "1px solid rgba(239, 68, 68, 0.35)",
+                  background: "rgba(239, 68, 68, 0.12)",
+                  color: "#b91c1c",
+                  borderRadius: "10px",
+                  padding: "8px 10px",
+                  fontSize: "12px",
+                  lineHeight: "1.35"
+                }}
+              >
+                {authErrorMessage}
+              </p>
+            ) : null}
             <label htmlFor="email" className={styles.label}>
               Account
             </label>
@@ -112,8 +156,22 @@ export default function LoginPage({
           </form>
 
           <p className={styles.footnote}>
-            Need access? Contact your workspace admin to invite you to the correct launch workspace.
+            Need access? Contact your marketplace admin for the right role account.
           </p>
+          <div
+            style={{
+              marginTop: "8px",
+              borderTop: "1px solid rgba(148, 163, 184, 0.3)",
+              paddingTop: "8px"
+            }}
+          >
+            <p style={{ margin: "0 0 6px 0", fontSize: "11px", color: "#334155", fontWeight: 600 }}>Seeded Marketplace Accounts</p>
+            {seedAccounts.map((account) => (
+              <p key={account.email} style={{ margin: "0 0 4px 0", fontSize: "11px", color: "#475569" }}>
+                {account.role}: {account.email} / {account.password}
+              </p>
+            ))}
+          </div>
         </section>
       </main>
     </div>

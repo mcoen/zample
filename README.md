@@ -1,6 +1,8 @@
 # Zample
 
-Microservices-first React web app for food R&D operations, built with Next.js and Tailwind CSS.
+Microservices-first React web app for a flavor-launch marketplace, built with Next.js and Tailwind CSS.
+
+Zample connects demand-side companies launching new consumable products with supply-side flavor vendors. The workflow centers on brief intake, vendor matching, sample lifecycle management, and launch execution.
 
 The initial design direction is inspired by Linear's focused, high-contrast productivity feel, with Zample branding and a strong cobalt visual language from your reference materials.
 

@@ -10,7 +10,9 @@
     "status": "in_progress",
     "createdAt": "2026-04-16T10:00:00.000Z",
     "updatedAt": "2026-04-18T13:00:00.000Z",
-    "launchId": "launch_fiber_refresh"
+    "launchId": "launch_fiber_refresh",
+    "vendorOrgId": "org_vendor_crunchlab_foods",
+    "demandOrgId": "org_demand_northstar_foods"
   },
   {
     "id": "task_flavor_panel",
@@ -23,7 +25,9 @@
     "status": "todo",
     "createdAt": "2026-04-15T09:10:00.000Z",
     "updatedAt": "2026-04-17T15:22:00.000Z",
-    "launchId": "launch_alt_protein"
+    "launchId": "launch_alt_protein",
+    "vendorOrgId": "org_vendor_flavorworks_labs",
+    "demandOrgId": "org_demand_catalyst_cpg"
   },
   {
     "id": "task_label_review",
@@ -36,6 +40,8 @@
     "status": "done",
     "createdAt": "2026-04-14T07:40:00.000Z",
     "updatedAt": "2026-04-16T17:48:00.000Z",
-    "launchId": "launch_clean_label"
+    "launchId": "launch_clean_label",
+    "vendorOrgId": "org_vendor_sauceforge_solutions",
+    "demandOrgId": "org_demand_sunline_grocer"
   }
 ]

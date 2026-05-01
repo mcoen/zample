@@ -28,6 +28,16 @@ textarea {
   font: inherit;
 }
 
+.app-shell label {
+  text-transform: capitalize;
+}
+
+.app-shell label input,
+.app-shell label select,
+.app-shell label textarea {
+  text-transform: none;
+}
+
 *::-webkit-scrollbar {
   width: 10px;
   height: 10px;
