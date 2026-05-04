@@ -12,9 +12,24 @@ function firstHeaderValue(value: string | null) {
     .trim();
 }
 
+function normalizePublicHost(host: string) {
+  const isLocalHost =
+    host.startsWith("localhost") ||
+    host.startsWith("127.") ||
+    host.startsWith("[::1]");
+
+  if (!isLocalHost && /:(3000|4000)$/.test(host)) {
+    return host.replace(/:(3000|4000)$/, "");
+  }
+
+  return host;
+}
+
 function buildAbsoluteUrl(request: NextRequest, pathname: string, search?: URLSearchParams) {
   const targetUrl = new URL(request.url);
-  const host = firstHeaderValue(request.headers.get("x-forwarded-host")) || firstHeaderValue(request.headers.get("host"));
+  const host =
+    normalizePublicHost(firstHeaderValue(request.headers.get("x-forwarded-host"))) ||
+    normalizePublicHost(firstHeaderValue(request.headers.get("host")));
   const proto = firstHeaderValue(request.headers.get("x-forwarded-proto"));
   if (host) {
     targetUrl.host = host;
