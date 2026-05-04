@@ -6,6 +6,7 @@ const SESSION_USER_COOKIE = "zample_user";
 function isPublicAsset(pathname: string) {
   return (
     pathname.startsWith("/_next") ||
+    pathname.startsWith("/api/") ||
     pathname.startsWith("/favicon.ico") ||
     pathname.startsWith("/icons") ||
     /\.[a-zA-Z0-9]+$/.test(pathname)

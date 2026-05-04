@@ -99,6 +99,27 @@ Potential target mapping:
 - Launches service -> DynamoDB table: `zample-launches`
 - Tasks service -> DynamoDB table: `zample-tasks`
 
+## Deploy to AWS (Elastic Beanstalk)
+
+The repo includes a deployment script that packages the current `git HEAD` and deploys it to a single Elastic Beanstalk environment that runs web + gateway + services on one host.
+
+Prerequisites:
+
+- AWS CLI configured with profile access
+- `zip` installed
+
+Deploy command:
+
+```bash
+AWS_PROFILE=mcoen-aws AWS_REGION=us-west-2 ./scripts/aws/deploy-eb.sh
+```
+
+Optional overrides:
+
+- `APP_NAME` (default `zample`)
+- `ENV_NAME` (default `zample-prod`)
+- `VERSION_LABEL` (default timestamp + git short SHA)
+
 ## Next Enhancements
 
 - Auth service and organization/user model

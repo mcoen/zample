@@ -14,7 +14,10 @@
     "dev:launches": "npm run dev --workspace @zample/launches-service",
     "dev:tasks": "npm run dev --workspace @zample/tasks-service",
     "build": "npm run build --workspace @zample/web",
-    "start": "npm run start --workspace @zample/web"
+    "prestart": "npm run build --workspace @zample/web",
+    "start:web": "npm run start --workspace @zample/web",
+    "start:all": "bash ./scripts/start-all.sh",
+    "start": "npm run start:all"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"

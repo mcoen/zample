@@ -1,11 +1,5 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import {
-  authenticateSeedUser,
-  encodeSessionUser,
   getSeedAccountSummaries,
-  SESSION_COOKIE_NAME,
-  SESSION_USER_COOKIE_NAME
 } from "@/lib/auth";
 import styles from "./page.module.css";
 
@@ -15,41 +9,6 @@ function sanitizeNextPath(pathname: string) {
   }
 
   return pathname;
-}
-
-async function loginAction(formData: FormData) {
-  "use server";
-
-  const email = String(formData.get("email") || "").trim();
-  const password = String(formData.get("password") || "").trim();
-  const nextPath = sanitizeNextPath(String(formData.get("next") || "/launches"));
-
-  if (!email || !password) {
-    redirect(`/login?error=missing_credentials&next=${encodeURIComponent(nextPath)}`);
-  }
-
-  const sessionUser = authenticateSeedUser(email, password);
-
-  if (!sessionUser) {
-    redirect(`/login?error=invalid_credentials&next=${encodeURIComponent(nextPath)}`);
-  }
-
-  cookies().set(SESSION_COOKIE_NAME, "active", {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: false,
-    path: "/",
-    maxAge: 60 * 60 * 12
-  });
-  cookies().set(SESSION_USER_COOKIE_NAME, encodeSessionUser(sessionUser), {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: false,
-    path: "/",
-    maxAge: 60 * 60 * 12
-  });
-
-  redirect(nextPath);
 }
 
 export default function LoginPage({
@@ -90,7 +49,7 @@ export default function LoginPage({
             </p>
           </div>
 
-          <form action={loginAction} className={styles.form}>
+          <form method="post" action="/api/auth/login" className={styles.form}>
             <input type="hidden" name="next" value={nextPath} />
             {authErrorMessage ? (
               <p

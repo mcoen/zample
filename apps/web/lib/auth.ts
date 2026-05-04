@@ -19,7 +19,7 @@ export const SESSION_USER_COOKIE_NAME = "zample_user";
 
 const seedAccounts: SeedAccount[] = [
   {
-    email: "sales@zample.app",
+    email: "sales@flavorworkslabs.com",
     password: process.env.ZAMPLE_SALES_PASSWORD || "ZampleSales!2026",
     fullName: "Sasha Cole",
     role: "Vendor Sales Rep",
