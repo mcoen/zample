@@ -11,11 +11,8 @@ function buildAbsoluteLoginUrl(request: Request) {
   const url = new URL(request.url);
   const host = firstHeaderValue(request.headers.get("x-forwarded-host")) || firstHeaderValue(request.headers.get("host"));
   const proto = firstHeaderValue(request.headers.get("x-forwarded-proto"));
-  const port = firstHeaderValue(request.headers.get("x-forwarded-port"));
-
   if (host) {
-    const includePort = Boolean(port) && port !== "80" && port !== "443" && !host.includes(":");
-    url.host = includePort ? `${host}:${port}` : host;
+    url.host = host;
   }
 
   if (proto) {

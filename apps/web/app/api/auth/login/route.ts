@@ -16,11 +16,8 @@ function buildAbsoluteUrl(request: NextRequest, pathname: string, search?: URLSe
   const targetUrl = new URL(request.url);
   const host = firstHeaderValue(request.headers.get("x-forwarded-host")) || firstHeaderValue(request.headers.get("host"));
   const proto = firstHeaderValue(request.headers.get("x-forwarded-proto"));
-  const port = firstHeaderValue(request.headers.get("x-forwarded-port"));
-
   if (host) {
-    const includePort = Boolean(port) && port !== "80" && port !== "443" && !host.includes(":");
-    targetUrl.host = includePort ? `${host}:${port}` : host;
+    targetUrl.host = host;
   }
 
   if (proto) {
