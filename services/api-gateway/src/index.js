@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const http = require("node:http");
+const https = require("node:https");
 
 dotenv.config({ path: "../../.env" });
 
@@ -30,43 +32,107 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 
 function createProxy({ mountPath, serviceBaseUrl, servicePath }) {
-  return async function proxyHandler(req, res) {
-    const suffix = req.originalUrl.replace(mountPath, "");
+  return function proxyHandler(req, res) {
+    const suffix = req.originalUrl.startsWith(mountPath) ? req.originalUrl.slice(mountPath.length) : "";
     const targetUrl = `${serviceBaseUrl}${servicePath}${suffix}`;
-
-    const headers = { ...req.headers };
-    delete headers.host;
-    delete headers["content-length"];
-
-    const init = {
-      method: req.method,
-      headers
-    };
-
-    if (!["GET", "HEAD"].includes(req.method)) {
-      init.body = JSON.stringify(req.body || {});
-      init.headers["content-type"] = "application/json";
-    }
+    let target;
 
     try {
-      const response = await fetch(targetUrl, init);
-      const body = await response.text();
-
-      for (const [key, value] of response.headers.entries()) {
-        if (["content-length", "connection", "transfer-encoding", "keep-alive"].includes(key.toLowerCase())) {
-          continue;
-        }
-        res.setHeader(key, value);
-      }
-
-      res.status(response.status).send(body);
+      target = new URL(targetUrl);
     } catch (error) {
       res.status(502).json({
         error: "Upstream service unavailable",
-        detail: error.message,
+        detail: `Invalid upstream URL: ${targetUrl}`,
         targetUrl
       });
+      return;
     }
+
+    const headers = { ...req.headers };
+    delete headers.host;
+    delete headers.connection;
+    delete headers["content-length"];
+    delete headers["transfer-encoding"];
+    delete headers["keep-alive"];
+
+    let payload = null;
+    if (!["GET", "HEAD"].includes(req.method)) {
+      payload = Buffer.from(JSON.stringify(req.body || {}));
+      headers["content-type"] = "application/json";
+      headers["content-length"] = String(payload.length);
+    }
+
+    const client = target.protocol === "https:" ? https : http;
+    const upstreamRequest = client.request({
+      protocol: target.protocol,
+      hostname: target.hostname,
+      port: target.port || (target.protocol === "https:" ? 443 : 80),
+      method: req.method,
+      path: `${target.pathname}${target.search}`,
+      headers,
+      timeout: 15000
+    });
+
+    upstreamRequest.on("timeout", () => {
+      upstreamRequest.destroy(new Error("Upstream request timed out"));
+    });
+
+    upstreamRequest.on("response", (upstreamResponse) => {
+      for (const [key, value] of Object.entries(upstreamResponse.headers)) {
+        if (value === undefined) {
+          continue;
+        }
+
+        if (["content-length", "connection", "transfer-encoding", "keep-alive"].includes(key.toLowerCase())) {
+          continue;
+        }
+
+        res.setHeader(key, value);
+      }
+
+      const chunks = [];
+
+      upstreamResponse.on("data", (chunk) => {
+        chunks.push(chunk);
+      });
+
+      upstreamResponse.on("end", () => {
+        const body = Buffer.concat(chunks).toString("utf8");
+        res.status(upstreamResponse.statusCode || 502).send(body);
+      });
+
+      upstreamResponse.on("error", (error) => {
+        // eslint-disable-next-line no-console
+        console.error(
+          `[gateway] Upstream stream error for ${req.method} ${req.originalUrl} -> ${targetUrl}: ${error.message}`
+        );
+        if (!res.headersSent) {
+          res.status(502).json({
+            error: "Upstream service unavailable",
+            detail: error.message,
+            targetUrl
+          });
+        }
+      });
+    });
+
+    upstreamRequest.on("error", (error) => {
+      // eslint-disable-next-line no-console
+      console.error(`[gateway] Proxy error for ${req.method} ${req.originalUrl} -> ${targetUrl}: ${error.message}`);
+      if (!res.headersSent) {
+        res.status(502).json({
+          error: "Upstream service unavailable",
+          detail: error.message,
+          targetUrl
+        });
+      }
+    });
+
+    if (payload) {
+      upstreamRequest.write(payload);
+    }
+
+    upstreamRequest.end();
   };
 }
 

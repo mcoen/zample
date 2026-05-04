@@ -19,10 +19,10 @@ GATEWAY_PORT="${API_PORT:-4000}"
 LAUNCHES_PORT="${LAUNCHES_PORT:-4101}"
 TASKS_PORT="${TASKS_PORT:-4102}"
 
-node services/launches-service/src/index.js &
+LAUNCHES_PORT="$LAUNCHES_PORT" node services/launches-service/src/index.js &
 pids+=("$!")
 
-node services/tasks-service/src/index.js &
+TASKS_PORT="$TASKS_PORT" node services/tasks-service/src/index.js &
 pids+=("$!")
 
 PORT="$GATEWAY_PORT" \
@@ -34,5 +34,17 @@ pids+=("$!")
 PORT="$WEB_PORT" npm run start --workspace @zample/web &
 pids+=("$!")
 
-wait -n
-exit $?
+if help wait 2>/dev/null | grep -q -- "-n"; then
+  wait -n
+  exit $?
+fi
+
+while true; do
+  for pid in "${pids[@]}"; do
+    if ! kill -0 "$pid" >/dev/null 2>&1; then
+      wait "$pid"
+      exit $?
+    fi
+  done
+  sleep 1
+done
