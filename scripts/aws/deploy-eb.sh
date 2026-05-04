@@ -67,13 +67,25 @@ ENV_EXISTS="$(AWS_PROFILE="$AWS_PROFILE" AWS_REGION="$AWS_REGION" aws elasticbea
 if [[ -z "$ENV_EXISTS" || "$ENV_EXISTS" == "None" ]]; then
   echo "[deploy] Environment not found. Creating: $ENV_NAME"
 
-  SOLUTION_STACK="$(AWS_PROFILE="$AWS_PROFILE" AWS_REGION="$AWS_REGION" aws elasticbeanstalk list-available-solution-stacks --query "SolutionStacks[?contains(@, 'running Node.js 20')][0]" --output text)"
-  if [[ -z "$SOLUTION_STACK" || "$SOLUTION_STACK" == "None" ]]; then
-    SOLUTION_STACK="$(AWS_PROFILE="$AWS_PROFILE" AWS_REGION="$AWS_REGION" aws elasticbeanstalk list-available-solution-stacks --query "SolutionStacks[?contains(@, 'running Node.js 22')][0]" --output text)"
+  NODE_STACKS="$(
+    AWS_PROFILE="$AWS_PROFILE" AWS_REGION="$AWS_REGION" aws elasticbeanstalk list-available-solution-stacks \
+      --query "SolutionStacks[?contains(@, 'Node.js')]" \
+      --output text | tr '\t' '\n'
+  )"
+
+  SOLUTION_STACK="$(printf '%s\n' "$NODE_STACKS" | rg "Node\\.js 20" -m 1 || true)"
+  if [[ -z "$SOLUTION_STACK" ]]; then
+    SOLUTION_STACK="$(printf '%s\n' "$NODE_STACKS" | rg "Node\\.js 22" -m 1 || true)"
+  fi
+  if [[ -z "$SOLUTION_STACK" ]]; then
+    SOLUTION_STACK="$(printf '%s\n' "$NODE_STACKS" | rg "Node\\.js 24" -m 1 || true)"
+  fi
+  if [[ -z "$SOLUTION_STACK" ]]; then
+    SOLUTION_STACK="$(printf '%s\n' "$NODE_STACKS" | head -n 1 || true)"
   fi
 
   if [[ -z "$SOLUTION_STACK" || "$SOLUTION_STACK" == "None" ]]; then
-    echo "Unable to find an available Node.js 20/22 Elastic Beanstalk solution stack" >&2
+    echo "Unable to find an available Node.js Elastic Beanstalk solution stack" >&2
     exit 1
   fi
 
