@@ -20,19 +20,39 @@ function normalizePublicHost(host: string) {
   return host;
 }
 
-function buildAbsoluteLoginUrl(request: Request) {
-  const url = new URL(request.url);
+function getPublicOrigin(request: Request) {
+  const referer = firstHeaderValue(request.headers.get("referer"));
+  if (referer) {
+    try {
+      return new URL(referer).origin;
+    } catch {
+      // ignore invalid referer
+    }
+  }
+
+  const origin = firstHeaderValue(request.headers.get("origin"));
+  if (origin) {
+    try {
+      return new URL(origin).origin;
+    } catch {
+      // ignore invalid origin
+    }
+  }
+
   const host =
     normalizePublicHost(firstHeaderValue(request.headers.get("x-forwarded-host"))) ||
     normalizePublicHost(firstHeaderValue(request.headers.get("host")));
-  const proto = firstHeaderValue(request.headers.get("x-forwarded-proto"));
+  const proto = firstHeaderValue(request.headers.get("x-forwarded-proto")) || "http";
+
   if (host) {
-    url.host = host;
+    return `${proto}://${host}`;
   }
 
-  if (proto) {
-    url.protocol = proto.endsWith(":") ? proto : `${proto}:`;
-  }
+  return new URL(request.url).origin;
+}
+
+function buildAbsoluteLoginUrl(request: Request) {
+  const url = new URL(getPublicOrigin(request));
 
   url.pathname = "/login";
   url.search = "";
