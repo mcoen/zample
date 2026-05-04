@@ -96,6 +96,7 @@ if [[ -z "$ENV_EXISTS" || "$ENV_EXISTS" == "None" ]]; then
     --version-label "$VERSION_LABEL" \
     --option-settings \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=PORT,Value=3000 \
+      Namespace=aws:autoscaling:launchconfiguration,OptionName=IamInstanceProfile,Value=aws-elasticbeanstalk-ec2-role \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=API_PORT,Value=4000 \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=LAUNCHES_PORT,Value=4101 \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=TASKS_PORT,Value=4102 \
@@ -113,6 +114,7 @@ else
     --version-label "$VERSION_LABEL" \
     --option-settings \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=PORT,Value=3000 \
+      Namespace=aws:autoscaling:launchconfiguration,OptionName=IamInstanceProfile,Value=aws-elasticbeanstalk-ec2-role \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=API_PORT,Value=4000 \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=LAUNCHES_PORT,Value=4101 \
       Namespace=aws:elasticbeanstalk:application:environment,OptionName=TASKS_PORT,Value=4102 \
