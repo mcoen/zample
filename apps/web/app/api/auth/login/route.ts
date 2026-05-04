@@ -6,6 +6,32 @@ import {
   SESSION_USER_COOKIE_NAME
 } from "@/lib/auth";
 
+function firstHeaderValue(value: string | null) {
+  return String(value || "")
+    .split(",")[0]
+    .trim();
+}
+
+function buildAbsoluteUrl(request: NextRequest, pathname: string, search?: URLSearchParams) {
+  const targetUrl = new URL(request.url);
+  const host = firstHeaderValue(request.headers.get("x-forwarded-host")) || firstHeaderValue(request.headers.get("host"));
+  const proto = firstHeaderValue(request.headers.get("x-forwarded-proto"));
+  const port = firstHeaderValue(request.headers.get("x-forwarded-port"));
+
+  if (host) {
+    const includePort = Boolean(port) && port !== "80" && port !== "443" && !host.includes(":");
+    targetUrl.host = includePort ? `${host}:${port}` : host;
+  }
+
+  if (proto) {
+    targetUrl.protocol = proto.endsWith(":") ? proto : `${proto}:`;
+  }
+
+  targetUrl.pathname = pathname;
+  targetUrl.search = search ? search.toString() : "";
+  return targetUrl;
+}
+
 function sanitizeNextPath(pathname: string) {
   if (!pathname.startsWith("/") || pathname.startsWith("//") || pathname === "/logout") {
     return "/launches";
@@ -14,11 +40,15 @@ function sanitizeNextPath(pathname: string) {
   return pathname;
 }
 
-function buildLoginRedirect(request: NextRequest, errorCode: "missing_credentials" | "invalid_credentials", nextPath: string) {
-  const loginUrl = new URL("/login", request.url);
-  loginUrl.searchParams.set("error", errorCode);
-  loginUrl.searchParams.set("next", nextPath);
-  return NextResponse.redirect(loginUrl);
+function buildLoginRedirect(
+  request: NextRequest,
+  errorCode: "missing_credentials" | "invalid_credentials",
+  nextPath: string
+) {
+  const search = new URLSearchParams();
+  search.set("error", errorCode);
+  search.set("next", nextPath);
+  return NextResponse.redirect(buildAbsoluteUrl(request, "/login", search));
 }
 
 export async function POST(request: NextRequest) {
@@ -37,8 +67,7 @@ export async function POST(request: NextRequest) {
     return buildLoginRedirect(request, "invalid_credentials", nextPath);
   }
 
-  const targetUrl = new URL(nextPath, request.url);
-  const response = NextResponse.redirect(targetUrl);
+  const response = NextResponse.redirect(buildAbsoluteUrl(request, nextPath));
 
   response.cookies.set(SESSION_COOKIE_NAME, "active", {
     httpOnly: true,
@@ -60,6 +89,5 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const loginUrl = new URL("/login", request.url);
-  return NextResponse.redirect(loginUrl);
+  return NextResponse.redirect(buildAbsoluteUrl(request, "/login"));
 }
