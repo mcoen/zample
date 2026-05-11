@@ -118,7 +118,7 @@ type LaunchesClientPageProps = {
   initialSessionUser?: SessionUser | null;
 };
 
-type NavItemId = "my_launches" | "inbox" | "reviews" | "pulse";
+type NavItemId = "my_launches" | "inbox" | "reviews" | "analytics" | "customers" | "suppliers";
 type LaunchDetailsTab = "overview" | "brief" | "vendors" | "attachments" | "tasks" | "feedback" | "participants";
 
 const LAUNCH_STAGES: LaunchStage[] = ["Intake", "In Validation", "Pilot", "Production"];
@@ -286,6 +286,27 @@ function PulseIcon({ className = "" }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className={className}>
       <path d="M3 13h4l2.5-5 4 10 2.5-5H21" />
+    </svg>
+  );
+}
+
+function CustomersIcon({ className = "" }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className={className}>
+      <circle cx="8" cy="8.5" r="2.8" />
+      <circle cx="16" cy="9.5" r="2.4" />
+      <path d="M3.5 19a4.8 4.8 0 0 1 9.6 0" />
+      <path d="M13 19a4 4 0 0 1 8 0" />
+    </svg>
+  );
+}
+
+function SuppliersIcon({ className = "" }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className={className}>
+      <path d="M4 10.5 12 6l8 4.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8.5Z" />
+      <path d="M4 10.5 12 15l8-4.5" />
+      <path d="M12 15V21" />
     </svg>
   );
 }
@@ -486,7 +507,9 @@ const MAIN_NAV: Array<{ id: NavItemId; label: string; icon: ComponentType<IconPr
   { id: "my_launches", label: "My Launches", icon: LaunchIcon },
   { id: "inbox", label: "Inbox", icon: HomeIcon },
   { id: "reviews", label: "Reviews", icon: ReviewIcon },
-  { id: "pulse", label: "Pulse", icon: PulseIcon }
+  { id: "analytics", label: "Analytics", icon: PulseIcon },
+  { id: "customers", label: "Customers", icon: CustomersIcon },
+  { id: "suppliers", label: "Suppliers", icon: SuppliersIcon }
 ];
 const LAUNCH_DETAILS_TABS: Array<{ id: LaunchDetailsTab; label: string; hint: string }> = [
   { id: "overview", label: "Overview", hint: "Launch summary and lifecycle progress" },
@@ -1787,6 +1810,125 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
       .slice(0, 18);
   }, [sortedLaunches]);
 
+  const sampleRequestLaunches = useMemo(() => {
+    return sortedLaunches
+      .filter((launch) => launch.status === "active")
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+  }, [sortedLaunches]);
+
+  const latestShippedSampleAlert = useMemo(() => {
+    return sortedLaunches
+      .filter((launch) => (launch.lifecycleStatus || "Draft") === "Sample Shipped")
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0] || null;
+  }, [sortedLaunches]);
+
+  const customerRows = useMemo(() => {
+    const map = new Map<
+      string,
+      {
+        name: string;
+        activeRequests: number;
+        atRiskRequests: number;
+        awaitingFeedback: number;
+        recentUpdateAt: string;
+        launchTitles: string[];
+      }
+    >();
+
+    sortedLaunches.forEach((launch) => {
+      const demandName =
+        launch.demandOrg?.name ||
+        launch.intake?.demandCompanyName ||
+        launch.brand ||
+        "Unknown Demand Company";
+      const row = map.get(demandName) || {
+        name: demandName,
+        activeRequests: 0,
+        atRiskRequests: 0,
+        awaitingFeedback: 0,
+        recentUpdateAt: launch.updatedAt,
+        launchTitles: []
+      };
+
+      row.activeRequests += 1;
+      if (launch.riskLevel === "High" || launch.priority === "Urgent") {
+        row.atRiskRequests += 1;
+      }
+      if (["Sample Shipped", "Awaiting Demand Feedback"].includes(launch.lifecycleStatus || "Draft")) {
+        row.awaitingFeedback += 1;
+      }
+      if (new Date(launch.updatedAt).getTime() > new Date(row.recentUpdateAt).getTime()) {
+        row.recentUpdateAt = launch.updatedAt;
+      }
+      if (row.launchTitles.length < 3 && !row.launchTitles.includes(launch.title)) {
+        row.launchTitles.push(launch.title);
+      }
+
+      map.set(demandName, row);
+    });
+
+    return Array.from(map.values()).sort((a, b) => {
+      if (b.activeRequests !== a.activeRequests) {
+        return b.activeRequests - a.activeRequests;
+      }
+      return new Date(b.recentUpdateAt).getTime() - new Date(a.recentUpdateAt).getTime();
+    });
+  }, [sortedLaunches]);
+
+  const supplierRows = useMemo(() => {
+    const map = new Map<
+      string,
+      {
+        name: string;
+        activeRequests: number;
+        needsAction: number;
+        closedWon: number;
+        recentUpdateAt: string;
+        launchTitles: string[];
+      }
+    >();
+
+    sortedLaunches.forEach((launch) => {
+      const vendorName =
+        launch.vendorOrg?.name ||
+        launch.vendorSelection?.selectedVendors?.find((vendor) => vendor.included && vendor.name)?.name ||
+        launch.vendorSelection?.approvedVendors?.[0] ||
+        launch.vendorSelection?.suggestedVendors?.[0] ||
+        "Unassigned Supplier";
+      const row = map.get(vendorName) || {
+        name: vendorName,
+        activeRequests: 0,
+        needsAction: 0,
+        closedWon: 0,
+        recentUpdateAt: launch.updatedAt,
+        launchTitles: []
+      };
+
+      row.activeRequests += 1;
+      if (["Clarification Needed", "Revision Requested"].includes(launch.lifecycleStatus || "Draft")) {
+        row.needsAction += 1;
+      }
+      if ((launch.lifecycleStatus || "Draft") === "Closed Won") {
+        row.closedWon += 1;
+      }
+      if (new Date(launch.updatedAt).getTime() > new Date(row.recentUpdateAt).getTime()) {
+        row.recentUpdateAt = launch.updatedAt;
+      }
+      if (row.launchTitles.length < 3 && !row.launchTitles.includes(launch.title)) {
+        row.launchTitles.push(launch.title);
+      }
+
+      map.set(vendorName, row);
+    });
+
+    return Array.from(map.values()).sort((a, b) => {
+      if (b.activeRequests !== a.activeRequests) {
+        return b.activeRequests - a.activeRequests;
+      }
+      return new Date(b.recentUpdateAt).getTime() - new Date(a.recentUpdateAt).getTime();
+    });
+  }, [sortedLaunches]);
+
   useEffect(() => {
     if (initialSessionUser) {
       configureApiSession({
@@ -1956,10 +2098,19 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
     });
   }
 
-  function openCreateLaunchModal() {
+  function openCreateLaunchModal(preset: "brief" | "sample" = "brief") {
     setLaunchModalMode("create");
     setLaunchEditingId(null);
-    setLaunchForm(launchFormFromLaunch());
+    const baseForm = launchFormFromLaunch();
+    setLaunchForm({
+      ...baseForm,
+      projectKind: preset === "sample" ? "Library Sample" : "Real Project",
+      launchType: preset === "sample" ? "Ingredient" : baseForm.launchType,
+      description:
+        preset === "sample"
+          ? "Sample request for flavor evaluation and rapid iteration."
+          : baseForm.description
+    });
     setIsLaunchModalOpen(true);
   }
 
@@ -2505,7 +2656,9 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
   const isMyLaunchesView = activeNav === "my_launches";
   const isInboxView = activeNav === "inbox";
   const isReviewsView = activeNav === "reviews";
-  const isPulseView = activeNav === "pulse";
+  const isAnalyticsView = activeNav === "analytics";
+  const isCustomersView = activeNav === "customers";
+  const isSuppliersView = activeNav === "suppliers";
   const roleViewLabel = isSalesRole
     ? "Vendor Sales Rep"
     : isRdRole
@@ -2513,7 +2666,7 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
       : isAdminRole
         ? "Marketplace Admin"
         : "Program";
-  const roleDefaultViewLabel = isSalesRole ? "Inbox" : "My Launches";
+  const roleDefaultViewLabel = initialSessionUser?.defaultNav === "inbox" ? "Inbox" : "My Launches";
   const launchTypePillClassName =
     themeMode === "dark"
       ? "inline-flex rounded-full border border-cyan-400/45 bg-cyan-700/20 px-2 py-0.5 text-xs font-semibold text-cyan-200"
@@ -2850,118 +3003,153 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
           <main className="relative flex min-h-0 flex-col rounded-2xl border border-[var(--line)] bg-[var(--surface-main)] shadow-[0_12px_30px_rgba(0,0,0,0.3)] lg:col-start-2 lg:row-start-2">
             {isMyLaunchesView ? (
               <div className="min-h-0 flex flex-1 flex-col overflow-hidden">
-                <section className="border-b border-[var(--line)] px-5 py-5">
-                  <div className="mb-3 flex items-center justify-between">
-                    <h2 className="text-lg font-semibold text-[var(--text-strong)]">Launch Analytics</h2>
-                    <p className="text-xs text-[var(--text-dim)]">
-                      {sessionRoleKey === "rd_specialist" ? "R&D workflow metrics" : "Live marketplace metrics"}
-                    </p>
-                  </div>
+                <section className="border-b border-[var(--line)] px-5 py-4">
+                  {isSalesRole ? (
+                    <div className="space-y-3">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                          <h2 className="text-lg font-semibold text-[var(--text-strong)]">Active Sample Requests</h2>
+                          <p className="text-xs text-[var(--text-dim)]">
+                            Sales workflow: create new sample requests and manage active project requests.
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => openCreateLaunchModal("sample")}
+                          title="Create a new sample request"
+                          className={`inline-flex h-10 items-center gap-2 rounded-md border px-4 text-sm font-semibold transition ${primaryActionClass}`}
+                        >
+                          <CreateIcon className="h-5 w-5" />
+                          New Sample Request
+                        </button>
+                      </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Total Launches</p>
-                      <p className="mt-1 text-2xl font-semibold text-[var(--text-strong)]">{analytics.totalLaunches}</p>
-                    </div>
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Open Opportunities</p>
-                      <p className="mt-1 text-2xl font-semibold text-[var(--text-strong)]">{analytics.openOpportunities}</p>
-                    </div>
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Overdue Tasks</p>
-                      <p className={`mt-1 text-2xl font-semibold ${themeMode === "dark" ? "text-rose-200" : "text-rose-700"}`}>
-                        {analytics.overdueTasks}
-                      </p>
-                    </div>
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Win Rate</p>
-                      <p className={`mt-1 text-2xl font-semibold ${themeMode === "dark" ? "text-emerald-200" : "text-emerald-700"}`}>
-                        {analytics.winRate}%
-                      </p>
-                    </div>
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Closed Won</p>
-                      <p className={`mt-1 text-2xl font-semibold ${themeMode === "dark" ? "text-emerald-200" : "text-emerald-700"}`}>
-                        {analytics.closedWonCount}
-                      </p>
-                    </div>
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Awaiting Buyer Confirmation</p>
-                      <p className={`mt-1 text-2xl font-semibold ${themeMode === "dark" ? "text-violet-200" : "text-violet-700"}`}>
-                        {analytics.awaitingDemandConfirmation}
-                      </p>
-                    </div>
-                  </div>
+                      {latestShippedSampleAlert ? (
+                        <div
+                          className={`rounded-md border px-3 py-2 text-sm ${
+                            themeMode === "dark"
+                              ? "border-amber-400/40 bg-amber-500/10 text-amber-100"
+                              : "border-amber-300 bg-amber-100 text-amber-900"
+                          }`}
+                        >
+                          Alert: Sample request <span className="font-semibold">{latestShippedSampleAlert.title}</span> was shipped for{" "}
+                          {(latestShippedSampleAlert.intake?.demandCompanyName || latestShippedSampleAlert.brand || "a customer")}.
+                        </div>
+                      ) : null}
 
-                  <div className="mt-3 grid gap-3 xl:grid-cols-3">
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Stage Distribution</p>
-                      <div className="mt-2 space-y-2">
-                        {analytics.byStage.map((entry) => {
-                          const percentage = analytics.totalLaunches
-                            ? Math.round((entry.count / analytics.totalLaunches) * 100)
-                            : 0;
+                      <div className="overflow-x-auto rounded-md border border-[var(--line)] bg-[var(--surface-1)]">
+                        <table className="min-w-full text-sm">
+                          <thead className="bg-[var(--surface-2)] text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">
+                            <tr>
+                              <th className="px-3 py-2 text-left">Project</th>
+                              <th className="px-3 py-2 text-left">Customer</th>
+                              <th className="px-3 py-2 text-left">Aging</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {sampleRequestLaunches.slice(0, 4).map((launch) => {
+                              const ageHours = Math.max(
+                                1,
+                                Math.round((Date.now() - new Date(launch.updatedAt).getTime()) / (1000 * 60 * 60))
+                              );
+                              const agingLabel = (launch.lifecycleStatus || "Draft") === "Draft" ? "Draft" : `${ageHours}h`;
+                              const isAgingCritical = ageHours >= 36;
 
-                          return (
-                            <div key={entry.stage}>
-                              <div className="mb-1 flex items-center justify-between text-xs text-[var(--text-muted)]">
-                                <span>{entry.stage}</span>
-                                <span>{entry.count}</span>
-                              </div>
-                              <div className="h-2 rounded bg-[var(--surface-2)]">
-                                <div
-                                  className={themeMode === "dark" ? "h-2 rounded bg-sky-500/60" : "h-2 rounded bg-sky-500"}
-                                  style={{ width: `${percentage}%` }}
-                                />
-                              </div>
-                            </div>
-                          );
-                        })}
+                              return (
+                                <tr key={launch.id} className="border-t border-[var(--line)]">
+                                  <td className="px-3 py-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => setActiveLaunchId(launch.id)}
+                                      className="font-medium text-[var(--text-strong)] underline-offset-2 hover:underline"
+                                      title={`Open ${launch.title}`}
+                                    >
+                                      {launch.title}
+                                    </button>
+                                  </td>
+                                  <td className="px-3 py-2 text-[var(--text-muted)]">
+                                    {launch.intake?.demandCompanyName || launch.brand || "Unknown"}
+                                  </td>
+                                  <td
+                                    className={`px-3 py-2 font-semibold ${
+                                      isAgingCritical
+                                        ? themeMode === "dark"
+                                          ? "text-rose-200"
+                                          : "text-rose-700"
+                                        : "text-[var(--text-base)]"
+                                    }`}
+                                  >
+                                    {agingLabel}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
-
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Launch Types</p>
-                      <div className="mt-2 space-y-2">
-                        {analytics.byType.length ? (
-                          analytics.byType.map((entry) => (
-                            <div key={entry.type} className="flex items-center justify-between text-sm">
-                              <span className="text-[var(--text-strong)]">{entry.type}</span>
-                              <span
-                                className="rounded-full border border-[var(--line)] px-2 py-0.5 text-xs text-[var(--text-muted)]"
-                                title={`${entry.count} launches tagged as ${entry.type}`}
-                              >
-                                {entry.count}
-                              </span>
-                            </div>
-                          ))
-                        ) : (
-                          <p className="text-xs text-[var(--text-dim)]">No launch type tags yet.</p>
-                        )}
+                  ) : isRdRole ? (
+                    <div className="space-y-3">
+                      <div>
+                        <h2 className="text-lg font-semibold text-[var(--text-strong)]">R&amp;D Workflow</h2>
+                        <p className="text-xs text-[var(--text-dim)]">
+                          Start from a project brief or create a direct sample request, then manage all active projects below.
+                        </p>
+                      </div>
+                      <div className="grid gap-2 sm:grid-cols-2">
+                        <button
+                          type="button"
+                          onClick={() => openCreateLaunchModal("brief")}
+                          className={`inline-flex h-11 items-center justify-center gap-2 rounded-md border px-4 text-sm font-semibold transition ${primaryActionClass}`}
+                          title="Create a new project brief"
+                        >
+                          <DocTextIcon className="h-5 w-5" />
+                          New Project Brief
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => openCreateLaunchModal("sample")}
+                          className={`inline-flex h-11 items-center justify-center gap-2 rounded-md border px-4 text-sm font-semibold transition ${primaryActionClass}`}
+                          title="Create a new sample request"
+                        >
+                          <CreateIcon className="h-5 w-5" />
+                          New Sample Request
+                        </button>
+                      </div>
+                      <div className="grid gap-2 sm:grid-cols-3">
+                        <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] px-3 py-2">
+                          <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Open Projects</p>
+                          <p className="mt-1 text-xl font-semibold text-[var(--text-strong)]">{analytics.openOpportunities}</p>
+                        </div>
+                        <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] px-3 py-2">
+                          <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Awaiting Feedback</p>
+                          <p className="mt-1 text-xl font-semibold text-[var(--text-strong)]">{analytics.awaitingFeedback}</p>
+                        </div>
+                        <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] px-3 py-2">
+                          <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Needs Clarification</p>
+                          <p className="mt-1 text-xl font-semibold text-[var(--text-strong)]">{analytics.needsAction}</p>
+                        </div>
                       </div>
                     </div>
-
-                    <div className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
-                      <p className="text-xs uppercase tracking-[0.12em] text-[var(--text-dim)]">Marketplace Pipeline Snapshot</p>
-                      <div className="mt-2 space-y-2">
-                        {[
-                          { label: "New Briefs", value: analytics.newRequests },
-                          { label: "Needs Vendor Action", value: analytics.needsAction },
-                          { label: "Samples Awaiting Feedback", value: analytics.awaitingFeedback },
-                          { label: "Commercial Opportunities", value: analytics.commercialOpportunityLaunches },
-                          { label: "Closed Won", value: analytics.closedWonCount },
-                          { label: "Closed Lost", value: analytics.closedLostCount }
-                        ].map((entry) => (
-                          <div key={entry.label} className="flex items-center justify-between text-sm">
-                            <span className="text-[var(--text-muted)]">{entry.label}</span>
-                            <span className="rounded-full border border-[var(--line)] px-2 py-0.5 text-xs text-[var(--text-base)]">
-                              {entry.value}
-                            </span>
-                          </div>
-                        ))}
+                  ) : (
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <h2 className="text-lg font-semibold text-[var(--text-strong)]">Marketplace Launches</h2>
+                        <p className="text-xs text-[var(--text-dim)]">
+                          Launch list is the primary workflow. Full portfolio metrics are now in the Analytics menu.
+                        </p>
                       </div>
+                      <button
+                        type="button"
+                        onClick={() => openCreateLaunchModal("brief")}
+                        title="Create marketplace launch"
+                        className={`inline-flex h-10 items-center gap-2 rounded-md border px-4 text-sm font-semibold transition ${primaryActionClass}`}
+                      >
+                        <CreateIcon className="h-5 w-5" />
+                        Create Launch Brief
+                      </button>
                     </div>
-                  </div>
+                  )}
                 </section>
 
                 <section className="min-h-0 flex flex-1 overflow-hidden">
@@ -2971,12 +3159,18 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
                         <div className="flex h-full items-center justify-between">
                           <div>
                             <h2 className="text-lg font-semibold text-[var(--text-strong)]">Launches</h2>
-                            <p className="text-xs text-[var(--text-dim)]">Marketplace opportunities with lifecycle tracking</p>
+                            <p className="text-xs text-[var(--text-dim)]">
+                              {isSalesRole
+                                ? "Projects and sample requests"
+                                : isRdRole
+                                  ? "Project briefs and sample requests"
+                                  : "Marketplace opportunities with lifecycle tracking"}
+                            </p>
                           </div>
                           <button
                             type="button"
-                            onClick={openCreateLaunchModal}
-                            title="Create marketplace launch"
+                            onClick={() => openCreateLaunchModal(isSalesRole ? "sample" : "brief")}
+                            title={isSalesRole ? "Create sample request" : "Create launch brief"}
                             className={`inline-flex h-9 w-9 items-center justify-center rounded-md border transition ${primaryActionClass}`}
                           >
                             <CreateIcon className="h-5 w-5" />
@@ -4868,10 +5062,10 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
               </div>
             ) : null}
 
-            {isPulseView ? (
+            {isAnalyticsView ? (
               <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
                 <div className="mb-3 flex items-end justify-between">
-                  <h2 className="text-lg font-semibold text-[var(--text-strong)]">Portfolio Pulse</h2>
+                  <h2 className="text-lg font-semibold text-[var(--text-strong)]">Launch Analytics</h2>
                   <p className="text-xs text-[var(--text-dim)]">
                     {analytics.totalLaunches} launches · {analytics.openTasks} open tasks · {analytics.overdueTasks} overdue
                   </p>
@@ -5082,6 +5276,94 @@ export default function HomePage({ initialSessionUser = null }: LaunchesClientPa
                       )}
                     </div>
                   </section>
+                </div>
+              </div>
+            ) : null}
+
+            {isCustomersView ? (
+              <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
+                <div className="mb-3 flex items-end justify-between">
+                  <h2 className="text-lg font-semibold text-[var(--text-strong)]">Customers</h2>
+                  <p className="text-xs text-[var(--text-dim)]">{customerRows.length} demand companies</p>
+                </div>
+                <div className="space-y-3">
+                  {customerRows.length ? (
+                    customerRows.map((customer) => (
+                      <article key={customer.name} className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
+                        <div className="flex flex-wrap items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="truncate text-base font-semibold text-[var(--text-strong)]">{customer.name}</p>
+                            <p className="mt-1 text-xs text-[var(--text-muted)]">
+                              Recent projects: {customer.launchTitles.join(", ") || "None yet"}
+                            </p>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-center">
+                            <div className="rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-2 py-1">
+                              <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--text-dim)]">Active</p>
+                              <p className="text-sm font-semibold text-[var(--text-strong)]">{customer.activeRequests}</p>
+                            </div>
+                            <div className="rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-2 py-1">
+                              <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--text-dim)]">At Risk</p>
+                              <p className="text-sm font-semibold text-[var(--text-strong)]">{customer.atRiskRequests}</p>
+                            </div>
+                            <div className="rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-2 py-1">
+                              <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--text-dim)]">Awaiting Feedback</p>
+                              <p className="text-sm font-semibold text-[var(--text-strong)]">{customer.awaitingFeedback}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="mt-2 text-xs text-[var(--text-dim)]">Last updated {formatRelative(customer.recentUpdateAt)}</p>
+                      </article>
+                    ))
+                  ) : (
+                    <div className="rounded-md border border-dashed border-[var(--line)] bg-[var(--surface-2)] px-3 py-4 text-sm text-[var(--text-dim)]">
+                      No customer records are available yet.
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : null}
+
+            {isSuppliersView ? (
+              <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
+                <div className="mb-3 flex items-end justify-between">
+                  <h2 className="text-lg font-semibold text-[var(--text-strong)]">Suppliers</h2>
+                  <p className="text-xs text-[var(--text-dim)]">{supplierRows.length} flavor suppliers</p>
+                </div>
+                <div className="space-y-3">
+                  {supplierRows.length ? (
+                    supplierRows.map((supplier) => (
+                      <article key={supplier.name} className="rounded-md border border-[var(--line)] bg-[var(--surface-1)] p-3">
+                        <div className="flex flex-wrap items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="truncate text-base font-semibold text-[var(--text-strong)]">{supplier.name}</p>
+                            <p className="mt-1 text-xs text-[var(--text-muted)]">
+                              Recent requests: {supplier.launchTitles.join(", ") || "None yet"}
+                            </p>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-center">
+                            <div className="rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-2 py-1">
+                              <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--text-dim)]">Active</p>
+                              <p className="text-sm font-semibold text-[var(--text-strong)]">{supplier.activeRequests}</p>
+                            </div>
+                            <div className="rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-2 py-1">
+                              <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--text-dim)]">Needs Action</p>
+                              <p className="text-sm font-semibold text-[var(--text-strong)]">{supplier.needsAction}</p>
+                            </div>
+                            <div className="rounded-md border border-[var(--line)] bg-[var(--surface-2)] px-2 py-1">
+                              <p className="text-[11px] uppercase tracking-[0.08em] text-[var(--text-dim)]">Closed Won</p>
+                              <p className="text-sm font-semibold text-[var(--text-strong)]">{supplier.closedWon}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="mt-2 text-xs text-[var(--text-dim)]">Last updated {formatRelative(supplier.recentUpdateAt)}</p>
+                      </article>
+                    ))
+                  ) : (
+                    <div className="rounded-md border border-dashed border-[var(--line)] bg-[var(--surface-2)] px-3 py-4 text-sm text-[var(--text-dim)]">
+                      No supplier records are available yet.
+                    </div>
+                  )}
                 </div>
               </div>
             ) : null}

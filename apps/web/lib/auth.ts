@@ -26,7 +26,7 @@ const seedAccounts: SeedAccount[] = [
     roleKey: "vendor_sales_rep",
     scopeType: "vendor",
     organizationIds: ["org_vendor_flavorworks_labs"],
-    defaultNav: "inbox"
+    defaultNav: "my_launches"
   },
   {
     email: "rd@zample.app",
